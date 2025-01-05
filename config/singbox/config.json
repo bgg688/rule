@@ -1,0 +1,223 @@
+{
+    "log": {"level": "info","timestamp": true},
+    "inbounds": [
+      {
+        "type": "mixed","tag": "in","listen": "0.0.0.0","listen_port": 10900,"udp_fragment": false
+      },
+      {
+        "type": "tun","address": "172.18.0.1/30","mtu": 9000,"auto_route": true,"strict_route": true,"stack": "mixed",
+        "platform": {"http_proxy": {"enabled": true,"server": "0.0.0.0","server_port": 10900}},"domain_strategy": "ipv4_only"
+      }
+    ],
+    "dns": {
+      "servers": [
+        { "tag": "local-dns","address": "192.168.1.1","detour": "ZhiLian"},
+        {
+          "tag": "remote-dns","address": "https://cloudflare-dns.com/dns-query","client_subnet": "1.0.1.0",
+          "address_resolver": "remote-resolver-dns","strategy": "ipv4_only","detour": "JieDianXuanZe"
+        },
+        { "tag": "remote-resolver-dns","address": "1.1.1.1","detour": "JieDianXuanZe"}
+      ],
+      "rules": [
+        { "outbound": "any","disable_cache": true,"server": "local-dns"},
+        { "clash_mode": "direct","server": "local-dns"},
+        { "clash_mode": "global","server": "remote-dns"},
+        { "rule_set": "GEOSITE-CN","server": "local-dns"}
+      ],"final": "remote-dns","strategy": "ipv4_only"
+    },
+    "route": {
+      "rules": [
+        { "action": "sniff"},
+        { "protocol": "dns", "action": "hijack-dns"},
+        { "inbound": "in", "action": "sniff"},
+        { "clash_mode": "direct","outbound": "direct"},
+        { "clash_mode": "global","outbound": "GLOBAL"},
+        { "domain": ["v2.hysteria.network","browserleaks.com","nfdns.top","webshare.io","www.qichiyu.com", "bulianglin.com", "v2rayssr.com"],"outbound": "JieDianXuanZe"},
+        { "domain": ["clash.razord.top", "yacd.metacubex.one", "yacd.haishan.me", "d.metacubex.one"],"outbound": "ZhiLian"},
+        { "rule_set": "talkatone","outbound": "Talkatone"},
+        { "rule_set": "ai","outbound": "AI"},
+        { "rule_set": ["telegram","telegramIP"],"outbound": "TELEGRAM"},
+        { "rule_set": ["netflix","netflixIP"],  "outbound": "NETFLIX" },
+        { "rule_set": "disney","outbound": "Disney"},
+        { "rule_set": "playstation", "outbound": "PlayStation"},
+        { "rule_set": "amazon","outbound": "PrimeVideo"},
+        { "rule_set": "youtube","outbound": "Youtube"},
+        { "rule_set": ["google","googleIP"],"outbound": "Google"},
+        { "rule_set": "github", "outbound": "GitHub"},
+        { "rule_set": "microsoft","outbound": "Microsoft"},
+        { "rule_set": "porn", "outbound": "Po"},
+        { "ip_is_private": true, "outbound": "ZhiLian"},
+        { "rule_set": ["CATEGORY-ADS","p-ADs"],"action": "reject","method": "default"},
+        { "network": "udp","port": 443,"action": "reject","method": "default"},
+        { "rule_set": ["GEOIP-CN","GEOSITE-CN"],"outbound": "ZhiLian"},      
+        { "rule_set": "GEOLOCATION-!CN","outbound": "JieDianXuanZe"}
+      ],
+      "rule_set": [
+        { 
+          "tag": "CATEGORY-ADS","type": "remote","format": "binary","download_detour": "ZhiLian",
+          "url": "https://jingxiang.gaminggod.top/https://github.com/MetaCubeX/meta-rules-dat/blob/sing/geo/geosite/category-ads-all.srs"        
+        },
+        {
+          "tag": "p-ADs","type": "remote","format": "binary","download_detour": "ZhiLian",
+          "url": "https://jingxiang.gaminggod.top/https://github.com/MetaCubeX/meta-rules-dat/blob/sing/geo/geosite/category-porn@ads.srs"
+        },
+        {
+          "tag": "talkatone","type": "remote","format": "binary","download_detour": "ZhiLian",
+          "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/bgg688/Talkatone/refs/heads/main/Talkatone.srs"
+        },
+        {
+          "tag": "GEOSITE-CN","type": "remote","format": "binary","download_detour": "ZhiLian",
+          "url": "https://jingxiang.gaminggod.top/https://github.com/MetaCubeX/meta-rules-dat/blob/sing/geo/geosite/cn.srs"
+        },
+        {
+          "tag": "google","type": "remote","format": "binary","download_detour": "ZhiLian",
+          "url": "https://jingxiang.gaminggod.top/https://github.com/MetaCubeX/meta-rules-dat/blob/sing/geo/geosite/google.srs"
+        },
+        {
+          "tag": "playstation","type": "remote","format": "binary","download_detour": "ZhiLian",
+          "url": "https://jingxiang.gaminggod.top/https://github.com/MetaCubeX/meta-rules-dat/blob/sing/geo/geosite/playstation.srs"
+        },
+        {
+          "tag": "github","type": "remote","format": "binary","download_detour": "ZhiLian",
+          "url": "https://jingxiang.gaminggod.top/https://github.com/MetaCubeX/meta-rules-dat/blob/sing/geo/geosite/github.srs"
+        },
+        {
+          "tag": "microsoft","type": "remote","format": "binary","download_detour": "ZhiLian",
+          "url": "https://jingxiang.gaminggod.top/https://github.com/MetaCubeX/meta-rules-dat/blob/sing/geo/geosite/microsoft.srs"
+        },
+        {
+          "tag": "youtube","type": "remote","format": "binary","download_detour": "ZhiLian",
+          "url": "https://jingxiang.gaminggod.top/https://github.com/MetaCubeX/meta-rules-dat/blob/sing/geo/geosite/youtube.srs"
+        },
+        {
+          "tag": "ai","type": "remote","format": "binary","download_detour": "ZhiLian",
+          "url": "https://jingxiang.gaminggod.top/https://github.com/MetaCubeX/meta-rules-dat/blob/sing/geo/geosite/category-ai-chat-!cn.srs"
+        },
+        {
+          "tag": "netflix","type": "remote","format": "binary","download_detour": "ZhiLian",
+          "url": "https://jingxiang.gaminggod.top/https://github.com/MetaCubeX/meta-rules-dat/blob/sing/geo/geosite/netflix.srs"
+        },	  
+        {
+          "tag": "amazon","type": "remote","format": "binary","download_detour": "ZhiLian",
+          "url": "https://jingxiang.gaminggod.top/https://github.com/MetaCubeX/meta-rules-dat/blob/sing/geo/geosite/amazon.srs"
+        },  
+        {
+          "tag": "disney","type": "remote","format": "binary","download_detour": "ZhiLian",
+          "url": "https://jingxiang.gaminggod.top/https://github.com/MetaCubeX/meta-rules-dat/blob/sing/geo/geosite/disney.srs"
+        },
+        {
+          "tag": "telegram","type": "remote","format": "binary","download_detour": "ZhiLian",
+          "url": "https://jingxiang.gaminggod.top/https://github.com/MetaCubeX/meta-rules-dat/blob/sing/geo/geosite/telegram.srs"
+        },
+        {
+          "tag": "porn","type": "remote","format": "binary","download_detour": "ZhiLian",
+          "url": "https://jingxiang.gaminggod.top/https://github.com/MetaCubeX/meta-rules-dat/blob/sing/geo/geosite/category-porn.srs"
+        },
+        {
+          "tag": "GEOLOCATION-!CN","type": "remote","format": "binary","download_detour": "ZhiLian",
+          "url": "https://jingxiang.gaminggod.top/https://github.com/MetaCubeX/meta-rules-dat/blob/sing/geo/geosite/geolocation-!cn.srs"
+        },
+        {
+          "tag": "netflixIP","type": "remote","format": "binary","download_detour": "ZhiLian",
+          "url": "https://jingxiang.gaminggod.top/https://github.com/MetaCubeX/meta-rules-dat/blob/sing/geo/geoip/netflix.srs"
+        },
+        {
+          "tag": "googleIP","type": "remote","format": "binary","download_detour": "ZhiLian",
+          "url": "https://jingxiang.gaminggod.top/https://github.com/MetaCubeX/meta-rules-dat/blob/sing/geo/geoip/google.srs"
+        },
+        {
+          "tag": "telegramIP","type": "remote","format": "binary","download_detour": "ZhiLian",
+          "url": "https://jingxiang.gaminggod.top/https://github.com/MetaCubeX/meta-rules-dat/blob/sing/geo/geoip/telegram.srs"
+        },
+        {
+          "tag": "GEOIP-CN","type": "remote","format": "binary","download_detour": "ZhiLian",
+          "url": "https://jingxiang.gaminggod.top/https://github.com/MetaCubeX/meta-rules-dat/blob/sing/geo/geoip/cn.srs"
+        }
+      ],
+      "final": "other-Fish",
+      "auto_detect_interface": true
+  },
+    "outbounds": [
+      {"tag": "AI","type": "selector","outbounds": ["Gia-R","JieDianXuanZe","SG-T","SJ-R","AU-H","SJ-H","SG-H"]},
+      {"tag": "NETFLIX","type": "selector","outbounds": ["SG-H","JieDianXuanZe","Gia-R","SJ-R","AU-H","SJ-H","SG-T"]},
+      {"tag": "Disney","type": "selector","outbounds": ["SG-T","JieDianXuanZe","Gia-R","SJ-R","AU-H","SJ-H","SG-H"]},
+      {"tag": "PrimeVideo","type": "selector","outbounds": ["SJ-R","SG-T","JieDianXuanZe","Gia-R","AU-H","SJ-H","SG-H"]},
+      {"tag": "PlayStation","type": "selector","outbounds": ["ZhiLian","SG-T","JieDianXuanZe","Gia-R","SJ-R","AU-H","SJ-H","SG-H"]},
+      {"tag": "Youtube","type": "selector","outbounds": ["JieDianXuanZe","SJ-R","SG-T","Gia-R","AU-H","SJ-H","SG-H"]},
+      {"tag": "Google","type": "selector","outbounds": ["Gia-R","Auto-select","JieDianXuanZe","SG-T","SJ-R","AU-H","SJ-H","SG-H"]},
+      {"tag": "GitHub","type": "selector","outbounds": ["SG-T","JieDianXuanZe","Gia-R","SJ-R","AU-H","SJ-H","SG-H"]},
+      {"tag": "Microsoft","type": "selector","outbounds": ["ZhiLian","JieDianXuanZe","SJ-R","SG-T","Gia-R","AU-H","SJ-H","SG-H"]},       
+      {"tag": "TELEGRAM","type": "selector","outbounds": ["Gia-R","Auto-select","JieDianXuanZe","SG-T","SJ-R","AU-H","SJ-H","SG-H"]},
+      {"tag": "Po","type": "selector","outbounds": ["REJECT","Gia-R","Auto-select","JieDianXuanZe","SG-T","SJ-R","AU-H","SJ-H","SG-H"]},
+      {"tag": "Talkatone","type": "selector","outbounds": ["Gia-ZZ-socks5","SJ-ZZ-socks5"]},
+      {"tag": "JieDianXuanZe","type": "selector","outbounds": ["Auto-select","Gia-R","SG-T","SJ-R","AU-H","SJ-H","SG-H"]},
+      {"tag": "Auto-select","type": "urltest","outbounds": ["Gia-R","SG-T","SJ-R","AU-H","SJ-H","SG-H"],"url": "https://www.gstatic.com/generate_204","interval": "300s","tolerance": 150},
+      {"tag": "ZhiLian","type": "selector","outbounds": ["direct"]},
+      {"tag": "other-Fish","type": "selector","outbounds": ["ZhiLian","JieDianXuanZe","SJ-R","SG-T","Gia-R","AU-H","SJ-H","SG-H"]},
+      {"tag": "GLOBAL","type": "selector","outbounds": ["JieDianXuanZe","Auto-select","ZhiLian","other-Fish","direct","Gia-R","SG-T","SJ-R","AU-H","SJ-H","SG-H"]},
+      {"tag": "SG-T","type": "vless",
+        "server": "","server_port": 443,
+        "uuid": "",
+        "tls": {"enabled": true,"server_name": "","insecure": false,
+          "utls": {"enabled": true,"fingerprint": "chrome"}}
+      },
+      {"tag": "Gia-R","type": "vless",
+        "server": "","server_port": 8443,
+        "uuid": "",
+        "tls": {"enabled": true,"server_name": "tripadvisor.com","insecure": false,
+          "reality": {"enabled": true,"public_key": ""},
+          "utls": {"enabled": true,"fingerprint": "chrome"}},"flow": "xtls-rprx-vision" 
+      },
+      {"tag": "SJ-R","type": "vless",
+        "server": "","server_port": 443,
+        "uuid": "",
+        "tls": {"enabled": true,"server_name": "icloud.cdn-apple.com","insecure": false,
+          "reality": {"enabled": true,"public_key": ""},
+          "utls": {"enabled": true,"fingerprint": "chrome"}},"flow": "xtls-rprx-vision"
+      },
+      {"tag": "AU-H","type": "hysteria2","server": "","server_port": 2096,
+        "up_mbps": 20,"down_mbps": 80,"password": "",
+        "tls": {"enabled": true,"server_name": "","insecure": false,"alpn": ["h3"]}
+      },
+      {"tag": "SG-H","type": "hysteria2","server": "","server_port": 8443,
+        "up_mbps": 20,"down_mbps": 100,"password": "",
+        "tls": {"enabled": true,"server_name": "","insecure": false,"alpn": ["h3"]}
+      },
+      {"tag": "SJ-H","type": "hysteria2","server": "","server_port": 2087,
+        "up_mbps": 20,"down_mbps": 100,"password": "",
+        "tls": {"enabled": true,"server_name": "","insecure": false,"alpn": ["h3"]}
+      },
+      {"tag": "Gia-ZZ-socks5","type": "vless",
+        "server": "","server_port": 56782,
+        "uuid": "",
+        "tls": {"enabled": true,"server_name": "swdist.apple.com","insecure": false,
+          "reality": {"enabled": true,"public_key": ""},
+          "utls": {"enabled": true,"fingerprint": "chrome"}},"flow": "xtls-rprx-vision" 
+      },
+      {"tag": "SJ-ZZ-socks5","type": "vless",
+        "server": "","server_port": 56782,
+        "uuid": "",
+        "tls": {"enabled": true,"server_name": "swdist.apple.com","insecure": false,
+          "reality": {"enabled": true,"public_key": ""},
+          "utls": {"enabled": true,"fingerprint": "chrome"}},"flow": "xtls-rprx-vision" 
+      },
+      {"tag": "REJECT","type": "hysteria2","server": "38.55.98.136","server_port": 443,
+        "up_mbps": 20,"down_mbps": 80,"password": "",
+        "tls": {"enabled": true,"server_name": "www.lovelive-anime.jp","insecure": false,"alpn": ["h3"]}
+      },
+      {"tag": "direct","type": "direct"}
+    ],
+    "experimental": {
+      "clash_api": {
+        "external_controller": "192.168.1.199:2088",
+        "external_ui": "/etc/sing-box/ui",
+        "external_ui_download_url": "https://jingxiang.gaminggod.top/https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip",
+        "external_ui_download_detour": "ZhiLian",
+        "default_mode": "rule"
+      },
+      "cache_file": {
+        "enabled": true,
+        "path": "/etc/sing-box/cache.db"
+      }
+    }
+  }
