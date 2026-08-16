@@ -108,8 +108,8 @@
     "default_domain_resolver": { "server": "public" }
   },
   "inbounds": [
-    { "tag": "tun-in", "type": "tun", "address": ["172.19.0.1/30", "fdfe:dcba:9876::1/126"], "mtu": 9000, "auto_route": true,"stack": "mixed" "strict_route": true },
-    { "tag": "mixed-in", "type": "mixed", "listen": "0.0.0.0", "listen_port": 10900 },
+    { "tag": "tun-in", "type": "tun", "address": ["172.19.0.1/30"], "mtu": 9000, "auto_route": true, "strict_route": true, "stack": "mixed" },
+    { "type": "mixed", "listen": "0.0.0.0", "listen_port": 10900 },
     { "tag": "socks-sg-reality", "type": "socks", "listen": "0.0.0.0", "listen_port": 10901 },
     { "tag": "socks-nl-reality", "type": "socks", "listen": "0.0.0.0", "listen_port": 10903 },
     { "tag": "socks-la-reality", "type": "socks", "listen": "0.0.0.0", "listen_port": 10904 },
