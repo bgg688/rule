@@ -71,7 +71,6 @@
       { "rule_set": "geosite-!cn", "outbound": "🚀 默认代理" },
       { "rule_set": "geosite-cn", "outbound": "🎯 全球直连" },
       { "action": "resolve" },
-      { "rule_set": "geoip-apple", "outbound": "🎯 全球直连" },
       { "rule_set": "geoip-google", "outbound": "🍀 Google" },
       { "rule_set": "geoip-telegram", "outbound": "📲 Telegram" },
       { "rule_set": ["geoip-cn","geoip-cn1"], "outbound": "🎯 全球直连" }
@@ -99,7 +98,6 @@
       { "tag": "geosite-cn", "type": "remote", "format": "binary", "download_detour": "🎯 全球直连", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/cn.srs" },
       { "tag": "geoip-google", "type": "remote", "format": "binary", "download_detour": "🎯 全球直连", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/google.srs" },
       { "tag": "geoip-telegram", "type": "remote", "format": "binary", "download_detour": "🎯 全球直连", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/telegram.srs" },
-      { "tag": "geoip-apple", "type": "remote", "format": "binary", "download_detour": "🎯 全球直连", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/apple.srs" },
       { "tag": "geoip-cn", "type": "remote", "format": "binary", "download_detour": "🎯 全球直连", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/cn.srs" },
       { "tag": "geoip-cn1", "type": "remote", "format": "binary", "download_detour": "🎯 全球直连", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/OneOhCloud/one-geoip/rule-set/one-china.srs" }
     ],
