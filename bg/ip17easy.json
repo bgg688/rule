@@ -1,0 +1,82 @@
+{
+  "dns": {
+    "servers": [
+      { "tag": "ali", "address": "223.5.5.5", "detour": "🎯 全球直连" },
+      { "tag": "cf",  "address": "1.1.1.1", "detour": "🚀 默认代理" }
+    ],
+    "rules": [
+      { "rule_set": ["geosite-ADS","geosite-pornADS"], "action": "reject"},
+      { "rule_set": ["geosite-microsoft", "geosite-apple", "geosite-tesla", "geosite-xiaomi","geosite-cn"], "server": "ali" }
+    ],
+    "final": "cf", "client_subnet": "1.0.1.0", "strategy": "ipv4_only"
+  },
+  "inbounds": [
+    { "type": "tun", "address": "172.19.0.1/30", "mtu": 9000, "auto_route": true, "domain_strategy": "ipv4_only"}
+  ],
+  "outbounds": [
+    { "tag": "🚀 默认代理", "type": "selector", "outbounds": ["♻️ 自动选择", "{all}"] },
+    { "tag": "🧠 AI", "type": "selector", "outbounds": ["♻️ 自动选择", "{all}"] },
+    { "tag": "📹 YouTube", "type": "selector", "outbounds": ["♻️ 自动选择", "♻️ H2测试", "{all}"] },
+    { "tag": "🍀 Google", "type": "selector", "outbounds": ["♻️ 自动选择", "{all}"] },
+    { "tag": "🎵 社媒TK", "type": "selector", "outbounds": ["♻️ 自动选择", "{all}"] },
+    { "tag": "📲 TG-DC", "type": "selector", "outbounds": ["♻️ 自动选择", "{all}"] },
+    { "tag": "📹 vimo", "type": "selector", "outbounds": ["♻️ 自动选择", "♻️ H2测试", "{all}"] },
+    { "tag": "🪟 Microsoft", "outbounds": ["🎯 全球直连"] },
+    { "tag": "🐠 漏网之鱼", "type": "selector", "outbounds": ["🚀 默认代理","🎯 全球直连", "{all}"] },
+    { "tag": "♻️ 自动选择", "type": "urltest", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["澳洲|坡县|荷兰|洛城"] }, { "action": "include", "keywords": ["[Rr]eality"] }], "url": "http://www.gstatic.com/generate_204", "interval": "5m", "tolerance": 50 },
+    { "tag": "♻️ H2测试", "type": "urltest", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["澳洲|坡县|荷兰|洛城"] }, { "action": "include", "keywords": ["H2"] }], "url": "http://www.gstatic.com/generate_204", "interval": "5m", "tolerance": 50 },
+    { "tag": "GLOBAL", "type": "selector", "outbounds": ["🚀 默认代理", "♻️ 自动选择", "♻️ H2测试", "🍃 延迟辅助", "🎯 全球直连"] },
+    { "tag": "🎯 全球直连", "type": "direct" }
+  ],
+  "route": {
+    "rules": [
+      { "action": "sniff", "sniffer": ["http", "tls", "quic", "dns"] },
+      { "type": "logical", "mode": "or", "rules": [{ "port": 53 }, { "protocol": "dns" }], "action": "hijack-dns" },
+      { "ip_is_private": true, "outbound": "🎯 全球直连" },
+      { "rule_set": "geosite-private", "outbound": "🎯 全球直连" },
+      { "rule_set": ["geosite-apple", "geosite-tesla", "geosite-xiaomi"], "outbound": "🎯 全球直连" },
+      { "rule_set": "geosite-discord", "outbound": "📲 TG-DC" },
+      { "rule_set": "geosite-telegram", "outbound": "📲 TG-DC" },
+      { "rule_set": "geosite-youtube", "outbound": "📹 YouTube" },
+      { "rule_set": "geosite-speedtest", "outbound": "📹 YouTube" },
+      { "rule_set": "geosite-google", "outbound": "🍀 Google" },
+      { "rule_set": "geosite-ai", "outbound": "🧠 AI" },
+      { "rule_set": "geosite-tiktok", "outbound": "🎵 社媒TK" },
+      { "rule_set": "geosite-media", "outbound": "🎵 社媒TK" },
+      { "rule_set": "geosite-porn", "outbound": "📹 vimo" },
+      { "rule_set": "geosite-microsoft", "outbound": "🪟 Microsoft" },
+      { "rule_set": "geosite-!cn", "outbound": "🚀 默认代理" },
+      { "rule_set": "geosite-cn", "outbound": "🎯 全球直连" },
+      { "rule_set": "geoip-google", "outbound": "🍀 Google" },
+      { "rule_set": "geoip-telegram", "outbound": "📲 TG-DC" },
+      { "rule_set": ["geoip-cn","geoip-cn1"], "outbound": "🎯 全球直连" }
+    ],
+    "rule_set": [
+      { "tag": "geosite-private", "type": "remote", "format": "binary", "download_detour": "🎯 全球直连", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/private.srs" },
+      { "tag": "geosite-ADS", "type": "remote", "format": "binary", "download_detour": "🎯 全球直连", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-ads-all.srs" },
+      { "tag": "geosite-pornADS", "type": "remote", "format": "binary", "download_detour": "🎯 全球直连", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-porn@ads.srs" },
+      { "tag": "geosite-discord", "type": "remote", "format": "binary", "download_detour": "🎯 全球直连", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/discord.srs" },
+      { "tag": "geosite-media", "type": "remote", "format": "binary", "download_detour": "🎯 全球直连", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-social-media-!cn.srs" },
+      { "tag": "geosite-apple", "type": "remote", "format": "binary", "download_detour": "🎯 全球直连", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/apple.srs" },
+      { "tag": "geosite-porn", "type": "remote", "format": "binary", "download_detour": "🎯 全球直连", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-porn.srs" },
+      { "tag": "geosite-speedtest", "type": "remote", "format": "binary", "download_detour": "🎯 全球直连", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/ookla-speedtest.srs" },
+      { "tag": "geosite-tesla", "type": "remote", "format": "binary", "download_detour": "🎯 全球直连", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/tesla.srs" },
+      { "tag": "geosite-xiaomi", "type": "remote", "format": "binary", "download_detour": "🎯 全球直连", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/xiaomi.srs" },
+      { "tag": "geosite-ai", "type": "remote", "format": "binary", "download_detour": "🎯 全球直连", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-ai-chat-!cn.srs" },
+      { "tag": "geosite-youtube", "type": "remote", "format": "binary", "download_detour": "🎯 全球直连", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/youtube.srs" },
+      { "tag": "geosite-google", "type": "remote", "format": "binary", "download_detour": "🎯 全球直连", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/google.srs" },
+      { "tag": "geosite-microsoft", "type": "remote", "format": "binary", "download_detour": "🎯 全球直连", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/microsoft.srs" },
+      { "tag": "geosite-telegram", "type": "remote", "format": "binary", "download_detour": "🎯 全球直连", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/telegram.srs" },
+      { "tag": "geosite-tiktok", "type": "remote", "format": "binary", "download_detour": "🎯 全球直连", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/tiktok.srs" },
+      { "tag": "geosite-!cn", "type": "remote", "format": "binary", "download_detour": "🎯 全球直连", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/geolocation-!cn.srs" },
+      { "tag": "geosite-cn", "type": "remote", "format": "binary", "download_detour": "🎯 全球直连", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/cn.srs" },
+      { "tag": "geoip-google", "type": "remote", "format": "binary", "download_detour": "🎯 全球直连", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/google.srs" },
+      { "tag": "geoip-telegram", "type": "remote", "format": "binary", "download_detour": "🎯 全球直连", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/telegram.srs" },
+      { "tag": "geoip-cn", "type": "remote", "format": "binary", "download_detour": "🎯 全球直连", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/cn.srs" },
+      { "tag": "geoip-cn1", "type": "remote", "format": "binary", "download_detour": "🎯 全球直连", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/OneOhCloud/one-geoip/rule-set/one-china.srs" }
+    ],
+    "final": "🐠 漏网之鱼",
+    "auto_detect_interface": true
+  },
+  "log": { "disabled": false, "level": "error", "timestamp": true }
+}
