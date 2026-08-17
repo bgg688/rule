@@ -25,6 +25,7 @@
     { "tag": "👨‍💻 Github", "type": "selector", "outbounds": ["♻️ 自动选择", "♻️ H2测试", "{all}"] },
     { "tag": "📲 Telegram", "type": "selector", "outbounds": ["♻️ 自动选择", "♻️ H2测试", "{all}"] },
     { "tag": "🎵 社媒TK", "type": "selector", "outbounds": ["♻️ 自动选择", "♻️ H2测试", "{all}"] },
+    { "tag": "🎥 奈迪", "type": "selector", "outbounds": ["♻️ 自动选择", "♻️ H2测试", "{all}"] },
     { "tag": "📹 Porn", "type": "selector", "outbounds": ["♻️ 自动选择", "♻️ H2测试", "{all}"] },
     { "tag": "🪟 Microsoft", "type": "selector", "outbounds": ["♻️ 自动选择", "🎯 全球直连", "{all}"] },
     { "tag": "🎮 Steam", "type": "selector", "outbounds": ["♻️ 自动选择", "🎯 全球直连", "{all}"] },
@@ -66,6 +67,8 @@
       { "rule_set": "geosite-steam", "outbound": "🎮 Steam" },
       { "rule_set": "geosite-tiktok", "outbound": "🎵 社媒TK" },
       { "rule_set": "geosite-media", "outbound": "🎵 社媒TK" },
+      { "rule_set": "geosite-disney",  "outbound": "🎥 奈迪"    },
+      { "rule_set": "geosite-netflix",  "outbound": "🎥 奈迪"    },
       { "rule_set": "geosite-porn", "outbound": "📹 Porn" },
       { "rule_set": "geosite-microsoft", "outbound": "🪟 Microsoft" },
       { "rule_set": "geosite-cn", "outbound": "🎯 全球直连" },
@@ -73,6 +76,7 @@
       { "action": "resolve" },
       { "rule_set": "geoip-google", "outbound": "🍀 Google" },
       { "rule_set": "geoip-telegram", "outbound": "📲 Telegram" },
+      { "rule_set": "geoip-netflix", "outbound": "🎥 奈迪" },
       { "rule_set": ["geoip-cn","geoip-cn1"], "outbound": "🎯 全球直连" }
     ],
     "rule_set": [
@@ -94,10 +98,13 @@
       { "tag": "geosite-microsoft", "type": "remote", "format": "binary", "download_detour": "🎯 全球直连", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/microsoft.srs" },
       { "tag": "geosite-telegram", "type": "remote", "format": "binary", "download_detour": "🎯 全球直连", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/telegram.srs" },
       { "tag": "geosite-tiktok", "type": "remote", "format": "binary", "download_detour": "🎯 全球直连", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/tiktok.srs" },
+      { "tag": "geosite-netflix", "type": "remote", "format": "binary", "download_detour": "🎯 全球直连", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/netflix.srs" },
+      { "tag": "geosite-disney", "type": "remote", "format": "binary", "download_detour": "🎯 全球直连", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/disney.srs" },
       { "tag": "geosite-!cn", "type": "remote", "format": "binary", "download_detour": "🎯 全球直连", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/geolocation-!cn.srs" },
       { "tag": "geosite-cn", "type": "remote", "format": "binary", "download_detour": "🎯 全球直连", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/cn.srs" },
       { "tag": "geoip-google", "type": "remote", "format": "binary", "download_detour": "🎯 全球直连", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/google.srs" },
       { "tag": "geoip-telegram", "type": "remote", "format": "binary", "download_detour": "🎯 全球直连", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/telegram.srs" },
+      { "tag": "geoip-netflix", "type": "remote", "format": "binary", "download_detour": "🎯 全球直连", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/netflix.srs" },
       { "tag": "geoip-cn", "type": "remote", "format": "binary", "download_detour": "🎯 全球直连", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/cn.srs" },
       { "tag": "geoip-cn1", "type": "remote", "format": "binary", "download_detour": "🎯 全球直连", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/OneOhCloud/one-geoip/rule-set/one-china.srs" }
     ],
