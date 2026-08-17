@@ -33,7 +33,7 @@
     { "tag": "🇸🇬 SG-Reality-Only", "type": "selector", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["坡县"] }, { "action": "include", "keywords": ["[Rr]eality"] }] },
     { "tag": "🇳🇱 NL-Reality-Only", "type": "selector", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["荷兰"] }, { "action": "include", "keywords": ["[Rr]eality"] }] },
     { "tag": "🇺🇸 LA-Reality-Only", "type": "selector", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["洛城"] }, { "action": "include", "keywords": ["[Rr]eality"] }] },
-    { "tag": "🇦🇺 AU-Reality-Only", "type": "selector", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["澳洲"] }, { "action": "include", "keywords": ["[Rr]eality2"] }] },
+    { "tag": "🇦🇺 AU-Reality-Only", "type": "selector", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["澳洲"] }, { "action": "include", "keywords": ["[Rr]eality 2"] }] },
     { "tag": "🇰🇷 KR-Reality-Only", "type": "selector", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["首尔"] }, { "action": "include", "keywords": ["[Rr]eality"] }] },
     { "tag": "🍃 延迟辅助", "type": "urltest", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["首尔"] }, { "action": "include", "keywords": ["[Rr]eality"] }], "url": "http://www.gstatic.com/generate_204", "interval": "5m", "tolerance": 20 },
     { "tag": "GLOBAL", "type": "selector", "outbounds": ["🚀 默认代理", "♻️ 自动选择", "♻️ H2测试", "🍃 延迟辅助", "🎯 全球直连"] },
