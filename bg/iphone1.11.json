@@ -1,7 +1,7 @@
 {
   "dns": {
     "servers": [
-      { "tag": "ali", "address": "223.5.5.5", "detour": "🎯 全球直连" },
+      { "tag": "ali", "address": "223.5.5.5" },
       { "tag": "cf",  "address": "1.1.1.1", "detour": "🚀 默认代理" }
     ],
     "rules": [
@@ -10,7 +10,7 @@
       { "rule_set": "geosite-github", "server": "cf" },
       { "rule_set": "geosite-microsoft", "server": "ali" }
     ],
-    "final": "cf", "client_subnet": "1.0.1.0", "strategy": "ipv4_only"
+    "final": "cf", "client_subnet": "114.114.1.1", "strategy": "ipv4_only"
   },
   "inbounds": [
     { "type": "tun", "address": "172.19.0.1/30", "mtu": 9000, "auto_route": true, "domain_strategy": "ipv4_only"}
