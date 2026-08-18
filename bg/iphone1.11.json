@@ -1,7 +1,7 @@
 {
   "dns": {
     "servers": [
-      { "tag": "ali", "address": "223.5.5.5" },
+      { "tag": "ali", "address": "223.5.5.5", "detour": "🎯 全球直连"},
       { "tag": "cf",  "address": "1.1.1.1", "detour": "🚀 默认代理" }
     ],
     "rules": [
