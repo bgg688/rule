@@ -24,7 +24,6 @@
     { "tag": "🐠 漏网之鱼", "type": "selector", "outbounds": ["🚀 默认代理","🎯 全球直连", "{all}"] },
     { "tag": "♻️ 自动选择", "type": "urltest", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["澳洲|坡县|荷兰|洛城"] }, { "action": "include", "keywords": ["[Rr]eality"] }], "url": "http://www.gstatic.com/generate_204", "interval": "5m", "tolerance": 50 },
     { "tag": "♻️ H2测试", "type": "urltest", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["澳洲|坡县|荷兰|洛城"] }, { "action": "include", "keywords": ["H2"] }], "url": "http://www.gstatic.com/generate_204", "interval": "5m", "tolerance": 50 },
-    { "tag": "GLOBAL", "type": "selector", "outbounds": ["🚀 默认代理", "♻️ 自动选择", "♻️ H2测试", "🎯 全球直连"] },
     { "tag": "🎯 全球直连", "type": "direct" }
   ],
   "route": {
