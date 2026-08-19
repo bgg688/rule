@@ -8,7 +8,7 @@
       { "clash_mode": "Direct", "server": "ali"},
       { "clash_mode": "Global", "server": "cf"},
       { "rule_set": "geosite-ADS", "action": "reject"},
-      { "rule_set": ["geosite-microsoft", "geosite-apple", "geosite-tesla", "geosite-xiaomi","geosite-cn"], "server": "ali" }
+      { "rule_set": ["geosite-apple", "geosite-tesla", "geosite-xiaomi","geosite-cn"], "server": "ali" }
     ],
     "final": "cf", "client_subnet": "114.114.1.1", "strategy": "ipv4_only"
   },
