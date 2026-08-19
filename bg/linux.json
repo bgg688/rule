@@ -41,12 +41,12 @@
   ],
   "route": {
     "rules": [
-      { "action": "sniff", "sniffer": ["http", "tls", "quic", "dns"] },
       { "inbound": "socks-sg-reality", "outbound": "🇸🇬 SG-Reality-Only" },
       { "inbound": "socks-nl-reality", "outbound": "🇳🇱 NL-Reality-Only" },
       { "inbound": "socks-la-reality", "outbound": "🇺🇸 LA-Reality-Only" },
       { "inbound": "socks-au-reality", "outbound": "🇦🇺 AU-Reality-Only" },
       { "inbound": "socks-kr-reality", "outbound": "🇰🇷 KR-Reality-Only" },
+      { "action": "sniff", "sniffer": ["http", "tls", "quic", "dns"] },
       { "type": "logical", "mode": "or", "rules": [{ "port": 53 }, { "protocol": "dns" }], "action": "hijack-dns" },
       { "rule_set": ["geosite-ADS","geosite-pornADS"], "action": "reject" },
       { "ip_is_private": true, "outbound": "🎯 全球直连" },
