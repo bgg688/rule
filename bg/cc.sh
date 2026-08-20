@@ -5,6 +5,10 @@
 # 适用系统: Debian 12/13 & OpenWrt 25.12+ (apk)
 # =========================================================
 
+# 脚本远端更新地址
+SCRIPT_URL="https://raw.githubusercontent.com/bgg688/rule/refs/heads/main/bg/cc.sh"
+SCRIPT_PATH="/usr/local/bin/cc"
+
 # 颜色定义
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -34,6 +38,43 @@ check_env() {
 press_any_key() {
     echo ""
     read -p "按回车键继续..." temp
+}
+
+# 2. 在线更新脚本函数
+update_script() {
+    echo -e "${YELLOW}正在从 GitHub 获取最新版本的 cc.sh...${PLAIN}"
+    
+    # 确保 curl 或 wget 存在
+    if ! command -v curl >/dev/null 2>&1 && ! command -v wget >/dev/null 2>&1; then
+        eval $PKG_ADD curl wget 2>/dev/null
+    fi
+
+    # 临时文件
+    TMP_FILE="/tmp/cc_new.sh"
+
+    if command -v curl >/dev/null 2>&1; then
+        curl -sSL "$SCRIPT_URL" -o "$TMP_FILE"
+    else
+        wget -qO "$TMP_FILE" "$SCRIPT_URL"
+    fi
+
+    if [ -s "$TMP_FILE" ]; then
+        # 简单校验语法或内容是否合法
+        if grep -q "main_menu" "$TMP_FILE"; then
+            mv "$TMP_FILE" "$SCRIPT_PATH"
+            chmod +x "$SCRIPT_PATH"
+            echo -e "${GREEN}脚本更新成功！正在重新启动最新版本...${PLAIN}"
+            sleep 1
+            exec "$SCRIPT_PATH"
+        else
+            echo -e "${RED}更新失败：下载的文件异常！${PLAIN}"
+            rm -f "$TMP_FILE"
+        fi
+    else
+        echo -e "${RED}更新失败：无法连接到 GitHub 或拉取文件为空！${PLAIN}"
+        rm -f "$TMP_FILE"
+    fi
+    press_any_key
 }
 
 # =========================================================
@@ -385,7 +426,7 @@ menu_acme() {
                 curl https://get.acme.sh | sh -s email=admin@$(date +%s).com
                 
                 ACME_BIN="$HOME/.acme.sh/acme.sh"
-                $ACME_BIN --set-default-ca --server letsencrypt
+                $ACME_BIN --set-defaultca --server letsencrypt
 
                 read -p "请输入你要申请证书的完整域名 (例: node.example.com): " domain_name
                 if [ -n "$domain_name" ]; then
@@ -393,7 +434,6 @@ menu_acme() {
                     $ACME_BIN --issue -d "$domain_name" --standalone -k ec-256
 
                     if [ $? -eq 0 ]; then
-                        # 创建输出目录
                         mkdir -p /root/acme/"$domain_name"
                         $ACME_BIN --install-cert -d "$domain_name" --ecc \
                           --fullchain-file /root/acme/"$domain_name"/fullchain.pem \
@@ -448,10 +488,11 @@ main_menu() {
         echo -e " ${GREEN}3.${PLAIN} 代理协议服务   (sing-box / Hysteria 2 日志与管理)"
         echo -e " ${GREEN}4.${PLAIN} Docker 容器管理 (Docker安装 / SmokePing 部署)"
         echo -e " ${GREEN}5.${PLAIN} ACME 域名 SSL 证书一键申请"
+        echo -e " ${CYAN}6. 在线更新 cc.sh 脚本${PLAIN}"
         echo -e "--------------------------------------------------"
         echo -e " ${GREEN}0.${PLAIN} 退出脚本"
         echo -e "--------------------------------------------------"
-        read -p "请输入选项 [0-5]: " choice
+        read -p "请输入选项 [0-6]: " choice
 
         case "$choice" in
             1) menu_system ;;
@@ -459,6 +500,7 @@ main_menu() {
             3) menu_proxy ;;
             4) menu_docker ;;
             5) menu_acme ;;
+            6) update_script ;;
             0)
                 echo -e "${GREEN}感谢使用，已退出脚本。${PLAIN}"
                 exit 0
