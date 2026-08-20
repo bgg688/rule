@@ -1,11 +1,11 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # =========================================================
 # 常用命令工具箱 (cc.sh)
 # 适用系统: Debian 12/13 & OpenWrt 25.12+ (apk)
 # =========================================================
 
-# 脚本远端更新地址
+# 脚本远端更新地址与本地路径
 SCRIPT_URL="https://raw.githubusercontent.com/bgg688/rule/refs/heads/main/bg/cc.sh"
 SCRIPT_PATH="/usr/local/bin/cc"
 
@@ -37,7 +37,7 @@ check_env() {
 # 辅助按键继续
 press_any_key() {
     echo ""
-    read -p "按回车键继续..." temp
+    read -rp "按回车键继续..." temp
 }
 
 # 2. 在线更新脚本函数
@@ -46,10 +46,9 @@ update_script() {
     
     # 确保 curl 或 wget 存在
     if ! command -v curl >/dev/null 2>&1 && ! command -v wget >/dev/null 2>&1; then
-        eval $PKG_ADD curl wget 2>/dev/null
+        eval "$PKG_ADD curl wget" 2>/dev/null
     fi
 
-    # 临时文件
     TMP_FILE="/tmp/cc_new.sh"
 
     if command -v curl >/dev/null 2>&1; then
@@ -59,7 +58,6 @@ update_script() {
     fi
 
     if [ -s "$TMP_FILE" ]; then
-        # 简单校验语法或内容是否合法
         if grep -q "main_menu" "$TMP_FILE"; then
             mv "$TMP_FILE" "$SCRIPT_PATH"
             chmod +x "$SCRIPT_PATH"
@@ -93,7 +91,7 @@ menu_system() {
         echo -e "------------------------------------"
         echo -e " 0. 返回主菜单"
         echo -e "------------------------------------"
-        read -p "请输入选项 [0-4]: " choice
+        read -rp "请输入选项 [0-4]: " choice
 
         case "$choice" in
             1)
@@ -148,7 +146,7 @@ menu_system() {
                 echo -e "${RED}           警告：一键 DD 重装系统               ${PLAIN}"
                 echo -e "${RED} 重装过程将清空当前系统磁盘所有数据，请谨慎操作！ ${PLAIN}"
                 echo -e "${RED}===============================================${PLAIN}"
-                read -p "确定要继续吗？(y/N): " confirm
+                read -rp "确定要继续吗？(y/N): " confirm
                 if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]; then
                     echo ""
                     echo "请选择要重装的系统:"
@@ -156,7 +154,7 @@ menu_system() {
                     echo "2) Debian 11"
                     echo "3) Ubuntu 22.04"
                     echo "4) Ubuntu 20.04"
-                    read -p "选择系统 [1-4, 默认1]: " sys_choice
+                    read -rp "选择系统 [1-4, 默认1]: " sys_choice
                     case "$sys_choice" in
                         2) OS_TARGET="debian 11" ;;
                         3) OS_TARGET="ubuntu 22.04" ;;
@@ -164,8 +162,8 @@ menu_system() {
                         *) OS_TARGET="debian 12" ;;
                     esac
 
-                    read -p "请输入重装后的 Root 密码: " sys_pass
-                    read -p "请输入重装后的 SSH 端口 [默认 22]: " sys_port
+                    read -rp "请输入重装后的 Root 密码: " sys_pass
+                    read -rp "请输入重装后的 SSH 端口 [默认 22]: " sys_port
                     sys_port=${sys_port:-22}
 
                     if [ -z "$sys_pass" ]; then
@@ -204,7 +202,7 @@ menu_network() {
         echo -e "------------------------------------"
         echo -e " 0. 返回主菜单"
         echo -e "------------------------------------"
-        read -p "请输入选项 [0-4]: " choice
+        read -rp "请输入选项 [0-4]: " choice
 
         case "$choice" in
             1)
@@ -224,13 +222,13 @@ menu_network() {
                     vnstat -l
                 else
                     echo -e "${YELLOW}未检测到流量统计工具，正在为您安装...${PLAIN}"
-                    eval $PKG_ADD iftop
+                    eval "$PKG_ADD iftop"
                     iftop
                 fi
                 press_any_key
                 ;;
             4)
-                read -p "请输入要测试的目标 IP 或 域名: " target_host
+                read -rp "请输入要测试的目标 IP 或 域名: " target_host
                 if [ -n "$target_host" ]; then
                     echo -e "${YELLOW}--- Ping 测试 ---${PLAIN}"
                     ping -c 4 "$target_host"
@@ -268,7 +266,7 @@ menu_proxy() {
         echo -e "------------------------------------"
         echo -e " 0. 返回主菜单"
         echo -e "------------------------------------"
-        read -p "请输入选项 [0-7]: " choice
+        read -rp "请输入选项 [0-7]: " choice
 
         case "$choice" in
             1)
@@ -327,7 +325,7 @@ menu_proxy() {
                 echo -e "${YELLOW}选择要调用的安装脚本:${PLAIN}"
                 echo "1) Hysteria 2 官方一键脚本"
                 echo "2) sing-box 官方安装脚本"
-                read -p "选择 [1-2]: " script_choice
+                read -rp "选择 [1-2]: " script_choice
                 case "$script_choice" in
                     1) bash <(curl -fsSL https://get.hy2.sh/) ;;
                     2) bash <(curl -fsSL https://sing-box.app/deb-install.sh) ;;
@@ -359,7 +357,7 @@ menu_docker() {
         echo -e "------------------------------------"
         echo -e " 0. 返回主菜单"
         echo -e "------------------------------------"
-        read -p "请输入选项 [0-6]: " choice
+        read -rp "请输入选项 [0-6]: " choice
 
         case "$choice" in
             1)
@@ -416,19 +414,19 @@ menu_acme() {
         echo -e "------------------------------------"
         echo -e " 0. 返回主菜单"
         echo -e "------------------------------------"
-        read -p "请输入选项 [0-3]: " choice
+        read -rp "请输入选项 [0-3]: " choice
 
         case "$choice" in
             1)
                 clear
                 echo -e "${YELLOW}正在安装必要的依赖项与 acme.sh...${PLAIN}"
-                eval $PKG_ADD socat curl wget cron 2>/dev/null
-                curl https://get.acme.sh | sh -s email=admin@$(date +%s).com
+                eval "$PKG_ADD socat curl wget cron" 2>/dev/null
+                curl https://get.acme.sh | sh -s email="admin@$(date +%s).com"
                 
                 ACME_BIN="$HOME/.acme.sh/acme.sh"
-                $ACME_BIN --set-defaultca --server letsencrypt
+                $ACME_BIN --set-default-ca --server letsencrypt
 
-                read -p "请输入你要申请证书的完整域名 (例: node.example.com): " domain_name
+                read -rp "请输入你要申请证书的完整域名 (例: node.example.com): " domain_name
                 if [ -n "$domain_name" ]; then
                     echo -e "${YELLOW}正在通过 80 端口验证申请证书，请确保 80 端口未被占用且域名解析已生效！${PLAIN}"
                     $ACME_BIN --issue -d "$domain_name" --standalone -k ec-256
@@ -492,7 +490,7 @@ main_menu() {
         echo -e "--------------------------------------------------"
         echo -e " ${GREEN}0.${PLAIN} 退出脚本"
         echo -e "--------------------------------------------------"
-        read -p "请输入选项 [0-6]: " choice
+        read -rp "请输入选项 [0-6]: " choice
 
         case "$choice" in
             1) menu_system ;;
