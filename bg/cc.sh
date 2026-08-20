@@ -44,7 +44,6 @@ press_any_key() {
 update_script() {
     echo -e "${YELLOW}正在从 GitHub 获取最新版本的 cc.sh...${PLAIN}"
     
-    # 确保 curl 或 wget 存在
     if ! command -v curl >/dev/null 2>&1 && ! command -v wget >/dev/null 2>&1; then
         eval "$PKG_ADD curl wget" 2>/dev/null
     fi
@@ -248,21 +247,21 @@ menu_network() {
 }
 
 # =========================================================
-# 菜单 3：代理协议服务 (sing-box / Hysteria 2)
+# 菜单 3：代理协议服务 (sing-box / Hysteria 2 / 面板)
 # =========================================================
 menu_proxy() {
     while true; do
         clear
         echo -e "${GREEN}====================================${PLAIN}"
-        echo -e "${GREEN}     3. sing-box / Hysteria 2 管理   ${PLAIN}"
+        echo -e "${GREEN}     3. sing-box / Hysteria 2 / 面板 ${PLAIN}"
         echo -e "${GREEN}====================================${PLAIN}"
         echo -e " 1. 查看 sing-box 运行状态"
         echo -e " 2. 重启 sing-box 服务"
         echo -e " 3. 查看 sing-box 实时日志"
-        echo -e " 4. 查看 Hysteria 2 运行状态"
-        echo -e " 5. 重启 Hysteria 2 服务"
-        echo -e " 6. 查看 Hysteria 2 实时日志"
-        echo -e " 7. 运行常用开源代理一键脚本 (安装/更新)"
+        echo -e " 4. 查看 Hysteria 2 运行状态 (hysteria-server)"
+        echo -e " 5. 重启 Hysteria 2 服务 (hysteria-server)"
+        echo -e " 6. 查看 Hysteria 2 实时日志 (hysteria-server)"
+        echo -e " 7. 协议/面板安装与卸载工具箱"
         echo -e "------------------------------------"
         echo -e " 0. 返回主菜单"
         echo -e "------------------------------------"
@@ -297,7 +296,7 @@ menu_proxy() {
                 ;;
             4)
                 if [ "$OS_TYPE" = "OpenWrt" ]; then
-                    service hysteria status 2>/dev/null || ps | grep hysteria
+                    service hysteria2 status 2>/dev/null || ps | grep hysteria
                 else
                     systemctl status hysteria-server --no-pager
                 fi
@@ -305,11 +304,11 @@ menu_proxy() {
                 ;;
             5)
                 if [ "$OS_TYPE" = "OpenWrt" ]; then
-                    service hysteria-server restart
+                    service hysteria2 restart
                 else
                     systemctl restart hysteria-server
                 fi
-                echo -e "${GREEN}Hysteria 2 已发起重启。${PLAIN}"
+                echo -e "${GREEN}Hysteria 2 (hysteria-server) 已发起重启。${PLAIN}"
                 press_any_key
                 ;;
             6)
@@ -322,14 +321,42 @@ menu_proxy() {
                 press_any_key
                 ;;
             7)
-                echo -e "${YELLOW}选择要调用的安装脚本:${PLAIN}"
-                echo "1) Hysteria 2 官方一键脚本"
-                echo "2) sing-box 官方安装脚本"
-                read -rp "选择 [1-2]: " script_choice
-                case "$script_choice" in
-                    1) bash <(curl -fsSL https://get.hy2.sh/) ;;
-                    2) bash <(curl -fsSL https://sing-box.app/deb-install.sh) ;;
-                    *) echo "已取消" ;;
+                clear
+                echo -e "${CYAN}====================================${PLAIN}"
+                echo -e "${CYAN}      协议与可视化面板安装/管理    ${PLAIN}"
+                echo -e "${CYAN}====================================${PLAIN}"
+                echo -e " 1. 安装/更新 sing-box"
+                echo -e " 2. 安装/更新 Hysteria 2"
+                echo -e " 3. 卸载 Hysteria 2"
+                echo -e " 4. 安装 s-ui 面板"
+                echo -e " 5. 安装 3x-ui 面板"
+                echo -e "------------------------------------"
+                echo -e " 0. 返回上一级"
+                echo -e "------------------------------------"
+                read -rp "请输入选项 [0-5]: " inst_choice
+                case "$inst_choice" in
+                    1)
+                        echo -e "${YELLOW}正在安装/更新 sing-box...${PLAIN}"
+                        curl -fsSL https://sing-box.app/install.sh | sh
+                        ;;
+                    2)
+                        echo -e "${YELLOW}正在安装/更新 Hysteria 2...${PLAIN}"
+                        bash <(curl -fsSL https://get.hy2.sh/)
+                        ;;
+                    3)
+                        echo -e "${YELLOW}正在卸载 Hysteria 2...${PLAIN}"
+                        bash <(curl -fsSL https://get.hy2.sh/) --remove
+                        ;;
+                    4)
+                        echo -e "${YELLOW}正在安装 s-ui 面板...${PLAIN}"
+                        bash <(curl -Ls https://raw.githubusercontent.com/alireza0/s-ui/master/install.sh)
+                        ;;
+                    5)
+                        echo -e "${YELLOW}正在安装 3x-ui 面板...${PLAIN}"
+                        bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh)
+                        ;;
+                    0) ;;
+                    *) echo -e "${RED}无效选项！${PLAIN}" ;;
                 esac
                 press_any_key
                 ;;
@@ -483,7 +510,7 @@ main_menu() {
         echo -e "${BLUE}==================================================${PLAIN}"
         echo -e " ${GREEN}1.${PLAIN} 系统维护与配置 (时区/BBR/一键DD/信息查阅)"
         echo -e " ${GREEN}2.${PLAIN} 网络诊断与测试 (解锁检测/回程路由/流量统计)"
-        echo -e " ${GREEN}3.${PLAIN} 代理协议服务   (sing-box / Hysteria 2 日志与管理)"
+        echo -e " ${GREEN}3.${PLAIN} 代理与面板管理 (sing-box / Hysteria 2 / s-ui / 3x-ui)"
         echo -e " ${GREEN}4.${PLAIN} Docker 容器管理 (Docker安装 / SmokePing 部署)"
         echo -e " ${GREEN}5.${PLAIN} ACME 域名 SSL 证书一键申请"
         echo -e " ${CYAN}6. 在线更新 cc.sh 脚本${PLAIN}"
