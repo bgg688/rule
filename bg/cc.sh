@@ -7,7 +7,7 @@
 
 # 脚本远端更新地址与本地路径
 SCRIPT_URL="https://raw.githubusercontent.com/bgg688/rule/refs/heads/main/bg/cc.sh"
-SCRIPT_PATH="/usr/local/bin/cc"
+SCRIPT_PATH="/usr/local/bin/cc.sh"
 
 # 颜色定义
 RED='\033[0;31m'
