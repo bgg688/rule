@@ -1,4 +1,5 @@
 {
+  "log": { "disabled": false, "level": "error", "timestamp": true },
   "dns": {
     "servers": [
       { "tag": "local", "type": "udp", "server": "223.5.5.5" },
@@ -14,6 +15,15 @@
     ],
     "final": "foreign","client_subnet": "223.5.5.0/24","strategy": "prefer_ipv4","independent_cache": true,"reverse_mapping": true
   },
+  "inbounds": [
+    { "tag": "tun-in", "type": "tun", "address": "172.19.0.1/30", "mtu": 9000, "auto_route": true, "strict_route": true, "stack": "mixed" },
+    { "type": "mixed", "listen": "0.0.0.0", "listen_port": 10900 },
+    { "tag": "socks-坡-reality", "type": "socks", "listen": "0.0.0.0", "listen_port": 10901 },
+    { "tag": "socks-荷-reality", "type": "socks", "listen": "0.0.0.0", "listen_port": 10903 },
+    { "tag": "socks-洛-reality", "type": "socks", "listen": "0.0.0.0", "listen_port": 10904 },
+    { "tag": "socks-澳-reality", "type": "socks", "listen": "0.0.0.0", "listen_port": 10911 },
+    { "tag": "socks-首-reality", "type": "socks", "listen": "0.0.0.0", "listen_port": 10913 }
+  ],
   "outbounds": [
     { "tag": "🚀 默认代理", "type": "selector", "outbounds": ["♻️ 自动选择", "♻️ H2测试", "{all}"] },
     { "tag": "💱 crypto", "type": "selector", "outbounds": ["♻️ 自动选择", "♻️ H2测试", "{all}"], "filter": [{ "action": "include", "keywords": ["首|bj"] }, { "action": "include", "keywords": ["[Rr]eality"] }] },
@@ -30,22 +40,22 @@
     { "tag": "🐠 漏网之鱼", "type": "selector", "outbounds": ["🚀 默认代理", "🎯 全球直连", "{all}"] },
     { "tag": "♻️ 自动选择", "type": "urltest", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["洛|荷"] }, { "action": "include", "keywords": ["[Rr]eality"] }], "url": "http://www.gstatic.com/generate_204", "interval": "10m", "tolerance": 50 },
     { "tag": "♻️ H2测试", "type": "urltest", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["荷|洛|坡|澳"] }, { "action": "include", "keywords": ["H2"] }], "url": "http://www.gstatic.com/generate_204", "interval": "15m", "tolerance": 50 },
-    { "tag": "🇸🇬 SG-Reality-Only", "type": "selector", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["坡"] }, { "action": "include", "keywords": ["[Rr]eality"] }] },
-    { "tag": "🇳🇱 NL-Reality-Only", "type": "selector", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["荷"] }, { "action": "include", "keywords": ["[Rr]eality"] }] },
-    { "tag": "🇺🇸 LA-Reality-Only", "type": "selector", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["洛"] }, { "action": "include", "keywords": ["[Rr]eality"] }] },
-    { "tag": "🇦🇺 AU-Reality-Only", "type": "selector", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["澳"] }, { "action": "include", "keywords": ["[Rr]eality 2"] }] },
-    { "tag": "🇰🇷 KR-Reality-Only", "type": "selector", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["首"] }] },
+    { "tag": "坡-Reality-Only", "type": "selector", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["坡"] }, { "action": "include", "keywords": ["[Rr]eality"] }] },
+    { "tag": "荷-Reality-Only", "type": "selector", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["荷"] }, { "action": "include", "keywords": ["[Rr]eality"] }] },
+    { "tag": "洛-Reality-Only", "type": "selector", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["洛"] }, { "action": "include", "keywords": ["[Rr]eality"] }] },
+    { "tag": "澳-Reality-Only", "type": "selector", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["澳"] }, { "action": "include", "keywords": ["[Rr]eality 2"] }] },
+    { "tag": "首-Reality-Only", "type": "selector", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["首"] }] },
     { "tag": "🍃 延迟辅助", "type": "urltest", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["首|坡|bj|澳"] }, { "action": "include", "keywords": ["[Rr]eality"] } ], "url": "http://www.gstatic.com/generate_204", "interval": "20m", "tolerance": 20 },
     { "tag": "GLOBAL", "type": "selector", "outbounds": ["🚀 默认代理", "♻️ 自动选择", "♻️ H2测试", "🍃 延迟辅助", "🎯 全球直连"] },
     { "tag": "🎯 全球直连", "type": "direct" }
   ],
   "route": {
     "rules": [
-      { "inbound": "socks-sg-reality", "outbound": "🇸🇬 SG-Reality-Only" },
-      { "inbound": "socks-nl-reality", "outbound": "🇳🇱 NL-Reality-Only" },
-      { "inbound": "socks-la-reality", "outbound": "🇺🇸 LA-Reality-Only" },
-      { "inbound": "socks-au-reality", "outbound": "🇦🇺 AU-Reality-Only" },
-      { "inbound": "socks-kr-reality", "outbound": "🇰🇷 KR-Reality-Only" },
+      { "inbound": "socks-坡-reality", "outbound": "坡-Reality-Only" },
+      { "inbound": "socks-荷-reality", "outbound": "荷-Reality-Only" },
+      { "inbound": "socks-洛-reality", "outbound": "洛-Reality-Only" },
+      { "inbound": "socks-澳-reality", "outbound": "澳-Reality-Only" },
+      { "inbound": "socks-首-reality", "outbound": "首-Reality-Only" },
       { "action": "sniff", "sniffer": ["http", "tls", "quic", "dns"] },
       { "type": "logical", "mode": "or", "rules": [{ "port": 53 }, { "protocol": "dns" }], "action": "hijack-dns" },
       { "rule_set": ["geosite-ADS","geosite-pornADS"], "action": "reject" },
@@ -110,20 +120,10 @@
     "auto_detect_interface": true,
     "default_domain_resolver": { "server": "public" }
   },
-  "inbounds": [
-    { "tag": "tun-in", "type": "tun", "address": "172.19.0.1/30", "mtu": 9000, "auto_route": true, "strict_route": true, "stack": "mixed" },
-    { "type": "mixed", "listen": "0.0.0.0", "listen_port": 10900 },
-    { "tag": "socks-sg-reality", "type": "socks", "listen": "0.0.0.0", "listen_port": 10901 },
-    { "tag": "socks-nl-reality", "type": "socks", "listen": "0.0.0.0", "listen_port": 10903 },
-    { "tag": "socks-la-reality", "type": "socks", "listen": "0.0.0.0", "listen_port": 10904 },
-    { "tag": "socks-au-reality", "type": "socks", "listen": "0.0.0.0", "listen_port": 10911 },
-    { "tag": "socks-kr-reality", "type": "socks", "listen": "0.0.0.0", "listen_port": 10913 }
-  ],
   "experimental": {
     "cache_file": { "enabled": true, "path": "/etc/sing-box/cache.db", "store_fakeip": true },
     "clash_api": { "external_controller": "0.0.0.0:2088", "external_ui": "/etc/sing-box/ui", "external_ui_download_detour": "🎯 全球直连", "secret": "", 
     "default_mode": "rule", "external_ui_download_url": "https://jingxiang.gaminggod.top/https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip"
     }
-  },
-  "log": { "disabled": false, "level": "error", "timestamp": true }
+  }
 }
