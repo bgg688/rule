@@ -11,6 +11,8 @@
       { "tag": "fakeip", "type": "fakeip", "inet4_range": "198.19.0.0/16", "inet6_range": "fc00::/18" }
     ],
     "rules": [
+      { "clash_mode": "Direct", "server": "local"},
+      { "clash_mode": "Global", "server": "foreign"},
       { "query_type": "HTTPS", "action": "reject" },
       { "rule_set": "geosite-fakeipfilter", "server": "local" },
       { "query_type": ["A", "AAAA"], "server": "fakeip", "rewrite_ttl": 1 },
@@ -49,6 +51,8 @@
       { "rule_set": ["geosite-ADS","geosite-pornADS"], "action": "reject" },
       { "ip_is_private": true, "outbound": "🎯 全球直连" },
       { "rule_set": "geosite-private", "outbound": "🎯 全球直连" },
+      { "clash_mode": "Direct", "outbound": "🎯 全球直连"},
+      { "clash_mode": "Global", "outbound": "GLOBAL"},
       { "rule_set": "geosite-apple", "outbound": "🎯 全球直连" },
       { "rule_set": "geosite-github", "outbound": "👨‍💻 Github" },
       { "domain_keyword": ["tradingview","exocharts"],"outbound": "💱 crypto" },
