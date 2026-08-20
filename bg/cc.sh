@@ -297,17 +297,17 @@ menu_proxy() {
                 ;;
             4)
                 if [ "$OS_TYPE" = "OpenWrt" ]; then
-                    service hysteria2 status 2>/dev/null || ps | grep hysteria
+                    service hysteria status 2>/dev/null || ps | grep hysteria
                 else
-                    systemctl status hysteria2 --no-pager
+                    systemctl status hysteria-server --no-pager
                 fi
                 press_any_key
                 ;;
             5)
                 if [ "$OS_TYPE" = "OpenWrt" ]; then
-                    service hysteria2 restart
+                    service hysteria-server restart
                 else
-                    systemctl restart hysteria2
+                    systemctl restart hysteria-server
                 fi
                 echo -e "${GREEN}Hysteria 2 已发起重启。${PLAIN}"
                 press_any_key
@@ -317,7 +317,7 @@ menu_proxy() {
                 if [ "$OS_TYPE" = "OpenWrt" ]; then
                     logread -e hysteria -f
                 else
-                    journalctl -u hysteria2 -n 50 -f
+                    journalctl -u hysteria-server -n 50 -f
                 fi
                 press_any_key
                 ;;
