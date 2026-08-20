@@ -18,7 +18,7 @@
     { "tag": "🚀 默认代理", "type": "selector", "outbounds": ["♻️ 自动选择", "♻️ H2测试", "{all}"] },
     { "tag": "💱 crypto", "type": "selector", "outbounds": ["♻️ 自动选择", "♻️ H2测试", "{all}"], "filter": [{ "action": "include", "keywords": ["首尔|bj"] }, { "action": "include", "keywords": ["[Rr]eality"] }] },
     { "tag": "🧠 AI", "type": "selector", "outbounds": ["♻️ 自动选择", "{all}"], "filter": [{ "action": "include", "keywords": ["荷兰|洛城|坡县|澳洲"] }, { "action": "include", "keywords": ["[Rr]eality"] }] },
-    { "tag": "📹 YouTube", "type": "selector", "outbounds": ["♻️ 自动选择", "♻️ H2测试", "{all}"], "filter": { "action": "include", "keywords": ["荷兰|洛城|坡县|澳洲"] } },
+    { "tag": "📹 YouTube", "type": "selector", "outbounds": ["♻️ 自动选择", "♻️ H2测试", "{all}"], "filter": [{ "action": "include", "keywords": ["荷兰|洛城|坡县|澳洲"] }] },
     { "tag": "🍀 Google", "type": "selector", "outbounds": ["♻️ 自动选择", "{all}"], "filter": [{ "action": "include", "keywords": ["荷兰|洛城|坡县|澳洲"] }, { "action": "include", "keywords": ["[Rr]eality"] }] },
     { "tag": "👨‍💻 Github", "type": "selector", "outbounds": ["♻️ 自动选择", "{all}"], "filter": [{ "action": "include", "keywords": ["荷兰|洛城|坡县|澳洲"] }, { "action": "include", "keywords": ["[Rr]eality"] }] },
     { "tag": "📲 Telegram", "type": "selector", "outbounds": ["♻️ 自动选择", "{all}"], "filter": [{ "action": "include", "keywords": ["荷兰|洛城|坡县|澳洲"] }, { "action": "include", "keywords": ["[Rr]eality"] }] },
