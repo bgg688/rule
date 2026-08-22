@@ -1,8 +1,9 @@
 {
   "dns": {
     "servers": [
-      { "tag": "ali", "address": "223.5.5.5", "detour": "🎯 全球直连"},
-      { "tag": "cf",  "address": "1.1.1.1", "detour": "🚀 默认代理" }
+      { "tag": "resolve", "address": "223.5.5.5", "detour": "🎯 全球直连"},
+      { "tag": "ali", "address": "https://dns.alidns.com/dns-query", "address_resolver": "resolve", "detour": "🎯 全球直连"},
+      { "tag": "cf",  "address": "tls://1.1.1.1", "detour": "🚀 默认代理" }
     ],
     "rules": [
       { "clash_mode": "Direct", "server": "ali"},
@@ -38,8 +39,9 @@
   ],
   "route": {
     "rules": [
-      { "action": "sniff", "sniffer": ["http", "tls", "quic", "dns"] },
-      { "type": "logical", "mode": "or", "rules": [{ "port": 53 }, { "protocol": "dns" }], "action": "hijack-dns" },
+      { "type": "logical", "mode": "and", "rules": [{"port": [53, 853], "invert": true}, {"clash_mode": "Global", "invert": true}, {"type": "logical", "mode": "or", "rules": [{"ip_is_private": true}, {"rule_set": "geoip-cn"}]}], "action": "bypass"},
+      { "type": "logical", "mode": "or", "rules": [{"domain_suffix": "push.apple.com"}, {"rule_set": "geoip-telegram"}], "invert": true, "action": "sniff", "sniffer": ["http", "tls", "quic", "dns"], "timeout": "500ms"},
+      { "type": "logical", "mode": "or", "rules": [{"port": 53}, {"protocol": "dns"}], "action": "hijack-dns"},
       { "ip_is_private": true, "outbound": "🎯 全球直连" },
       { "rule_set": "geosite-private", "outbound": "🎯 全球直连" },
       { "clash_mode": "Direct", "outbound": "🎯 全球直连"},
