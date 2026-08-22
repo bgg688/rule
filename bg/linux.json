@@ -3,7 +3,7 @@
   "dns": {
     "servers": [
       {"tag": "local", "type": "local", "prefer_go": true},
-      { "tag": "ali", "type": "https", "server": "223.5.5.5" },
+      { "tag": "ali", "type": "https", "server": "dns.alidns.com", "domain_resolver": "local"},
       { "tag": "cf", "type": "https", "server": "1.1.1.1", "detour": "🚀 默认代理" },
       { "tag": "fakeip", "type": "fakeip", "inet4_range": "198.19.0.0/16", "inet6_range": "2001:db8::/32" }
     ],
@@ -18,7 +18,7 @@
     "final": "cf","client_subnet": "223.5.5.0/24","strategy": "ipv4_only","independent_cache": true,"reverse_mapping": true
   },
   "inbounds": [
-    { "tag": "tun-in", "type": "tun", "address": ["172.19.0.1/30","fdfe:dcba:9876::1/126"], "auto_route": true, "auto_redirect": true, "stack": "mixed" },
+    { "tag": "tun-in", "type": "tun", "address": "172.19.0.1/30", "auto_route": true, "auto_redirect": true, "stack": "mixed" },
     { "type": "mixed", "listen": "0.0.0.0", "listen_port": 10900 },
     { "tag": "socks-坡-reality", "type": "socks", "listen": "0.0.0.0", "listen_port": 10901 },
     { "tag": "socks-荷-reality", "type": "socks", "listen": "0.0.0.0", "listen_port": 10903 },
