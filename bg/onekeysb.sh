@@ -15,6 +15,7 @@
 #   onekeysb.sh update-kernel  # 仅尝试升级 sing-box 内核 (见下方说明)
 #   onekeysb.sh self-update    # 仅更新本脚本
 #   onekeysb.sh maintenance    # 定时任务专用: 自更新 -> 配置更新 -> 内核更新
+#   onekeysb.sh fix-user       # 修复 unit 要求的运行用户缺失导致的 status=217/USER
 #   onekeysb.sh status         # 查看状态
 #   onekeysb.sh uninstall      # 卸载管理组件 (不卸载 sing-box 本体)
 #
@@ -188,6 +189,29 @@ EOF
   log "sing-box 引导安装完成 (v${version})，二进制位于 $BOOTSTRAP_BIN，服务已 enable（等配置写入后启动）"
 }
 
+# 检查 sing-box.service 实际生效的 unit 里要求哪个运行用户，如果这个用户在系统里不存在就自动创建，
+# 并把配置目录的所有权改给它。官方安装（尤其是非标准 apt 流程时）有时只写 unit 不建用户，
+# 会导致 systemd 报 "Failed to determine credentials for user ... status=217/USER"
+ensure_singbox_service_user() {
+  local unit_user
+  unit_user=$(systemctl cat sing-box 2>/dev/null | grep -m1 '^User=' | cut -d'=' -f2 | tr -d ' ')
+
+  [[ -z "$unit_user" || "$unit_user" == "root" ]] && return 0
+
+  if ! id "$unit_user" >/dev/null 2>&1; then
+    log "sing-box.service 需要运行用户 '$unit_user'，但系统里不存在，自动创建"
+    if useradd --system --no-create-home --shell /usr/sbin/nologin "$unit_user" 2>/dev/null; then
+      log "已创建系统用户 $unit_user"
+    else
+      log "警告: 创建用户 $unit_user 失败，请手动执行: useradd --system --no-create-home --shell /usr/sbin/nologin $unit_user"
+      return 1
+    fi
+  fi
+
+  mkdir -p "$(dirname "$SB_CONF")"
+  chown -R "$unit_user":"$unit_user" "$(dirname "$SB_CONF")" 2>/dev/null || true
+}
+
 # 官方安装接管后，清理引导阶段自建的 systemd unit，避免覆盖官方管理的服务
 cleanup_bootstrap_if_superseded() {
   if command -v dpkg >/dev/null 2>&1 && dpkg -s sing-box >/dev/null 2>&1; then
@@ -195,6 +219,7 @@ cleanup_bootstrap_if_superseded() {
     rm -f /etc/systemd/system/sing-box.service
     rm -f "$BOOTSTRAP_MARKER"
     systemctl daemon-reload
+    ensure_singbox_service_user
     if systemctl restart sing-box; then
       log "已切换为官方安装的 sing-box 并重启完成"
     else
@@ -327,6 +352,8 @@ update_config() {
   cp "$tmp_file" "$SB_CONF"
   rm -f "$tmp_file"
 
+  ensure_singbox_service_user
+
   if systemctl restart sing-box; then
     log "配置更新完成，sing-box 已重启"
   else
@@ -344,6 +371,7 @@ update_kernel() {
     if curl -fsSL https://sing-box.app/install.sh | sh; then
       log "官方安装脚本执行完成"
       cleanup_bootstrap_if_superseded
+      ensure_singbox_service_user
     else
       log "错误: 官方安装脚本执行失败"
       return 1
@@ -464,7 +492,8 @@ show_menu() {
     echo "4) 仅更新本管理脚本"
     echo "5) 修改远程配置地址"
     echo "6) 查看运行状态"
-    echo "7) 卸载"
+    echo "7) 修复运行用户缺失问题 (status=217/USER)"
+    echo "8) 卸载"
     echo "0) 退出"
     read -rp "请选择: " choice < /dev/tty
     case "$choice" in
@@ -474,7 +503,8 @@ show_menu() {
       4) self_update ;;
       5) rm -f "$URL_FILE"; ask_remote_url ;;
       6) show_status ;;
-      7) do_uninstall; break ;;
+      7) ensure_singbox_service_user && systemctl restart sing-box ;;
+      8) do_uninstall; break ;;
       0) break ;;
       *) echo "无效选项" ;;
     esac
@@ -483,7 +513,7 @@ show_menu() {
 
 usage() {
   cat <<EOF
-用法: onekeysb.sh [install|menu|update-config|update-kernel|self-update|maintenance|status|uninstall]
+用法: onekeysb.sh [install|menu|update-config|update-kernel|self-update|maintenance|fix-user|status|uninstall]
 不带参数运行等同于 menu（若未安装则自动 install）
 EOF
 }
@@ -496,6 +526,7 @@ main() {
     update-kernel) need_root; update_kernel ;;
     self-update) need_root; self_update ;;
     maintenance) need_root; do_maintenance ;;
+    fix-user) need_root; ensure_singbox_service_user && systemctl restart sing-box ;;
     status) show_status ;;
     uninstall) do_uninstall ;;
     menu) need_root; show_menu ;;
