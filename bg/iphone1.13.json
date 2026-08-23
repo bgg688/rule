@@ -2,17 +2,17 @@
   "log": { "disabled": false, "level": "error", "timestamp": true },
   "dns": {
     "servers": [
-      { "tag": "ali", "type": "udp", "server": "223.5.5.5" },
+      { "tag": "local", "type": "udp", "server": "223.5.5.5" },
       { "tag": "public", "type": "https", "server": "dns.alidns.com", "domain_resolver": "local" },
-      { "tag": "cf", "type": "https", "server": "8.8.8.8", "detour": "🚀 默认代理" }
+      { "tag": "cf", "type": "https", "server": "1.1.1.1", "detour": "🚀 默认代理" }
     ],
     "rules": [
-      { "clash_mode": "Direct", "server": "ali"},
+      { "clash_mode": "Direct", "server": "local"},
       { "clash_mode": "Global", "server": "cf"},
       { "rule_set": ["geosite-ADS","geosite-pornADS"], "action": "reject"},
-      { "rule_set": ["geosite-apple", "geosite-tesla", "geosite-alibaba", "geosite-aliyun","geosite-xiaomi","geosite-cn"], "server": "ali" },
+      { "rule_set": ["geosite-apple", "geosite-tesla", "geosite-alibaba", "geosite-aliyun","geosite-xiaomi","geosite-cn"], "server": "public" },
       { "rule_set": "geosite-github", "server": "cf" },
-      { "rule_set": "geosite-microsoft", "server": "ali" }
+      { "rule_set": "geosite-microsoft", "server": "public" }
     ],
     "final": "cf","client_subnet": "114.114.1.1/24","strategy": "ipv4_only"
   },
@@ -40,8 +40,10 @@
   ],
   "route": {
     "rules": [
-      { "action": "sniff", "sniffer": ["http", "tls", "quic", "dns"] },
-      { "type": "logical", "mode": "or", "rules": [{ "port": 53 }, { "protocol": "dns" }], "action": "hijack-dns" },
+      { "type": "logical", "mode": "and", "rules": [{"port": [53, 853], "invert": true}, {"clash_mode": "Global", "invert": true}, {"type": "logical", "mode": "or", "rules": [{"ip_is_private": true}, {"rule_set": ["geoip-cn","geoip-cn1"]}]}], "action": "bypass"},
+      { "type": "logical", "mode": "or", "rules": [{"domain_suffix": "push.apple.com"}, {"rule_set": "geoip-telegram"}], "invert": true, "action": "sniff", "sniffer": ["http", "tls", "quic", "dns"], "timeout": "500ms"},
+      { "type": "logical", "mode": "or", "rules": [{"port": 53}, {"protocol": "dns"}], "action": "hijack-dns"},
+      { "type": "logical", "mode": "or", "rules": [{"port": 853}, {"protocol": ["stun", "quic"]}], "action": "reject", "no_drop": true},
       { "ip_is_private": true, "outbound": "🎯 全球直连" },
       { "rule_set": "geosite-private", "outbound": "🎯 全球直连" },
       { "clash_mode": "Direct", "outbound": "🎯 全球直连"},
