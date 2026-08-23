@@ -2,7 +2,7 @@
   "log": { "disabled": false, "level": "error", "timestamp": true },
   "dns": {
     "servers": [
-      {"tag": "local", "type": "local", "prefer_go": true},
+      { "tag": "local", "type": "local", "prefer_go": true},
       { "tag": "ali", "type": "https", "server": "dns.alidns.com", "domain_resolver": "local"},
       { "tag": "cf", "type": "https", "server": "1.1.1.1", "detour": "🚀 默认代理" },
       { "tag": "fakeip", "type": "fakeip", "inet4_range": "198.19.0.0/16", "inet6_range": "2001:db8::/32" }
@@ -46,7 +46,7 @@
     { "tag": "洛-Reality-Only", "type": "selector", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["洛"] }, { "action": "include", "keywords": ["[Rr]eality"] }] },
     { "tag": "澳-Reality-Only", "type": "selector", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["澳"] }, { "action": "include", "keywords": ["[Rr]eality 2"] }] },
     { "tag": "首-Reality-Only", "type": "selector", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["首"] }] },
-    { "tag": "🍃 延迟辅助", "type": "urltest", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["首|坡|bj|澳"] }, { "action": "include", "keywords": ["[Rr]eality"] } ], "url": "http://www.gstatic.com/generate_204", "interval": "20m", "tolerance": 20 },
+    { "tag": "🍃 延迟辅助", "type": "urltest", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["首|坡|bj|澳"] }, { "action": "include", "keywords": ["[Rr]eality"] }], "url": "http://www.gstatic.com/generate_204", "interval": "20m", "tolerance": 20 },
     { "tag": "GLOBAL", "type": "selector", "outbounds": ["🚀 默认代理", "♻️ 自动选择", "♻️ H2测试", "🍃 延迟辅助", "🎯 全球直连"] },
     { "tag": "🎯 全球直连", "type": "direct" }
   ],
@@ -60,12 +60,12 @@
       { "type": "logical", "mode": "and", "rules": [{"port": [53, 853], "invert": true}, {"clash_mode": "Global", "invert": true}, {"type": "logical", "mode": "or", "rules": [{"ip_is_private": true}, {"rule_set": ["geoip-cn","geoip-cn1"]}]}], "action": "bypass"},
       { "type": "logical", "mode": "or", "rules": [{"domain_suffix": "push.apple.com"}, {"rule_set": "geoip-telegram"}], "invert": true, "action": "sniff", "sniffer": ["http", "tls", "quic", "dns"], "timeout": "500ms"},
       { "type": "logical", "mode": "or", "rules": [{"port": 53}, {"protocol": "dns"}], "action": "hijack-dns"},
+      { "type": "logical", "mode": "or", "rules": [{"port": 853}, {"protocol": ["stun", "quic"]}], "action": "reject", "no_drop": true},
       { "ip_is_private": true, "outbound": "🎯 全球直连"},
       { "rule_set": "geosite-private", "outbound": "🎯 全球直连" },
-      { "type": "logical", "mode": "or", "rules": [{"port": 853}, {"protocol": ["stun", "quic"]}], "action": "reject", "no_drop": true},
       { "network": "icmp", "action": "resolve"},
       { "network": "icmp", "outbound": "🎯 全球直连"},  
-      { "clash_mode": "Direct", "outbound": "直连"},
+      { "clash_mode": "Direct", "outbound": "🎯 全球直连"},
       { "clash_mode": "Global", "outbound": "GLOBAL"},    
       { "rule_set": "geosite-apple", "outbound": "🎯 全球直连" },
       { "rule_set": "geosite-github", "outbound": "👨‍💻 Github" },
