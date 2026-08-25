@@ -12,8 +12,8 @@
       { "clash_mode": "Direct", "server": "ali"},
       { "clash_mode": "Global", "server": "fakeip"},
       { "rule_set": "geosite-fakeipfilter", "server": "ali" },
-      { "query_type": ["A", "AAAA"], "server": "fakeip", "rewrite_ttl": 1 },
-      { "rule_set": ["geosite-bilibili","geosite-bilibili2","geosite-cn"], "server": "ali" }
+      { "rule_set": ["geosite-bilibili","geosite-bilibili2","geosite-cn"], "server": "ali" },
+      { "query_type": ["A", "AAAA"], "server": "fakeip", "rewrite_ttl": 1 }
     ],
     "final": "cf","client_subnet": "223.5.5.0/24","strategy": "ipv4_only","independent_cache": true,"reverse_mapping": true
   },
