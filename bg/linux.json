@@ -2,7 +2,7 @@
   "log": { "disabled": false, "level": "error", "timestamp": true },
   "dns": {
     "servers": [
-      { "tag": "local", "type": "local", "prefer_go": true},
+      { "tag": "local", "type": "udp", "server": "223.5.5.5"},
       { "tag": "ali", "type": "https", "server": "dns.alidns.com", "domain_resolver": "local"},
       { "tag": "cf", "type": "tls", "server": "1.1.1.1", "detour": "🚀 默认代理" },
       { "tag": "fakeip", "type": "fakeip", "inet4_range": "198.19.0.0/16", "inet6_range": "2001:db8::/32" }
