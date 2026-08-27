@@ -44,7 +44,7 @@
     { "tag": "坡-Reality-Only", "type": "selector", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["坡"] }, { "action": "include", "keywords": ["[Rr]eality"] }] },
     { "tag": "荷-Reality-Only", "type": "selector", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["荷"] }, { "action": "include", "keywords": ["[Rr]eality"] }] },
     { "tag": "洛-Reality-Only", "type": "selector", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["洛"] }, { "action": "include", "keywords": ["[Rr]eality"] }] },
-    { "tag": "澳-Reality-Only", "type": "selector", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["澳"] }, { "action": "include", "keywords": ["[Rr]eality 2"] }] },
+    { "tag": "澳-Reality-Only", "type": "selector", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["洲2"] }, { "action": "include", "keywords": ["[Rr]eality"] }] },
     { "tag": "首-Reality-Only", "type": "selector", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["首"] }] },
     { "tag": "🍃 延迟辅助", "type": "urltest", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["首|坡|bj|澳"] }, { "action": "include", "keywords": ["[Rr]eality"] }], "url": "http://www.gstatic.com/generate_204", "interval": "20m", "tolerance": 20 },
     { "tag": "GLOBAL", "type": "selector", "outbounds": ["🚀 默认代理", "♻️ 自动选择", "♻️ H2测试", "🍃 延迟辅助", "🎯 全球直连"] },
