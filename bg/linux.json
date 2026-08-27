@@ -13,7 +13,7 @@
       { "clash_mode": "Global", "server": "fakeip"},
       { "rule_set": "geosite-fakeipfilter", "server": "ali" },
       { "query_type": ["A", "AAAA"], "server": "fakeip", "rewrite_ttl": 1 },
-      { "rule_set": ["geosite-bilibili","geosite-bilibili2","geosite-cn"], "server": "ali" }
+      { "rule_set": ["geosite-bilibili","geosite-bilibili2","geosite-douyin","geosite-cn"], "server": "ali" }
     ],
     "final": "cf","client_subnet": "223.5.5.0/24","strategy": "ipv4_only","independent_cache": true,"reverse_mapping": true
   },
@@ -67,7 +67,7 @@
       { "network": "icmp", "outbound": "🎯 全球直连"},  
       { "clash_mode": "Direct", "outbound": "🎯 全球直连"},
       { "clash_mode": "Global", "outbound": "GLOBAL"},    
-      { "rule_set": ["geosite-apple","geosite-bilibili","geosite-bilibili2"], "outbound": "🎯 全球直连" },
+      { "rule_set": ["geosite-apple","geosite-douyin","geosite-bilibili","geosite-bilibili2"], "outbound": "🎯 全球直连" },
       { "rule_set": "geosite-github", "outbound": "👨‍💻 Github" },
       { "domain_keyword": ["tradingview","exocharts"],"outbound": "💱 crypto" },
       { "rule_set": ["geosite-bybit","geosite-binance","geosite-crypto"],  "outbound": "💱 crypto" },
@@ -99,6 +99,7 @@
       { "tag": "geosite-media", "type": "remote", "format": "binary", "download_detour": "🎯 全球直连", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-social-media-!cn.srs" },
       { "tag": "geosite-bilibili", "type": "remote", "format": "binary", "download_detour": "🎯 全球直连", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/bilibili.srs" },
       { "tag": "geosite-bilibili2", "type": "remote", "format": "binary", "download_detour": "🎯 全球直连", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/bilibili2.srs" },
+      { "tag": "geosite-douyin", "type": "remote", "format": "binary", "download_detour": "🎯 全球直连", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/douyin.srs" },
       { "tag": "geosite-apple", "type": "remote", "format": "binary", "download_detour": "🎯 全球直连", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/apple.srs" },
       { "tag": "geosite-porn", "type": "remote", "format": "binary", "download_detour": "🎯 全球直连", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-porn.srs" },
       { "tag": "geosite-speedtest", "type": "remote", "format": "binary", "download_detour": "🎯 全球直连", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/ookla-speedtest.srs" },
