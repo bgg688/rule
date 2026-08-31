@@ -16,9 +16,7 @@
     ],
     "final": "cf","client_subnet": "223.5.5.0/24","strategy": "ipv4_only","reverse_mapping": true
   },
-  "http_clients": [
-    { "tag": "DDD", "detour": "TAG-DIRECT" }
-  ],
+  "http_clients": [ { "tag":"rule-fetch" } ],
   "inbounds": [
     { "tag": "tun-in", "type": "tun", "address": "172.19.0.1/30", "auto_route": true, "auto_redirect": true, "stack": "mixed" },
     { "type": "mixed", "listen": "0.0.0.0", "listen_port": 10900 },
@@ -37,9 +35,9 @@
     { "tag": "🎵 社媒", "type": "selector", "outbounds": ["♻️ 自动选择", "♻️ H2测试", "{all}"], "filter": [{ "action": "exclude", "keywords": ["首|bj"] }, { "action": "include", "keywords": ["[Rr]eality"] }] },
     { "tag": "🎥 奈迪", "type": "selector", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["坡"] }] },
     { "tag": "📹 Porn", "type": "selector", "outbounds": ["♻️ 自动选择", "♻️ H2测试", "{all}"], "filter": [{ "action": "exclude", "keywords": ["首|bj"] }] },
-    { "tag": "🪟 Microsoft", "type": "selector", "outbounds": ["🚀 默认代理", "TAG-DIRECT"]},
-    { "tag": "🎮 Steam", "type": "selector", "outbounds": ["TAG-DIRECT", "{all}"], "filter": [{ "action": "include", "keywords": ["坡"] }, { "action": "include", "keywords": ["[Rr]eality"] }] },
-    { "tag": "🐠 漏网之鱼", "type": "selector", "outbounds": ["🚀 默认代理", "TAG-DIRECT", "{all}"] },
+    { "tag": "🪟 Microsoft", "type": "selector", "outbounds": ["🚀 默认代理", "🎯 全球直连"]},
+    { "tag": "🎮 Steam", "type": "selector", "outbounds": ["🎯 全球直连", "{all}"], "filter": [{ "action": "include", "keywords": ["坡"] }, { "action": "include", "keywords": ["[Rr]eality"] }] },
+    { "tag": "🐠 漏网之鱼", "type": "selector", "outbounds": ["🚀 默认代理", "🎯 全球直连", "{all}"] },
     { "tag": "♻️ 自动选择", "type": "urltest", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["洛|荷"] }, { "action": "include", "keywords": ["[Rr]eality"] }], "url": "http://www.apple.com/library/test/success.html", "interval": "10m", "tolerance": 50 },
     { "tag": "♻️ H2测试", "type": "urltest", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["荷|洛|坡|澳"] }, { "action": "include", "keywords": ["H2"] }], "url": "http://www.apple.com/library/test/success.html", "interval": "15m", "tolerance": 50 },
     { "tag": "🍃 延迟辅助", "type": "urltest", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["首|坡|bj|澳"] }, { "action": "include", "keywords": ["[Rr]eality"] }], "url": "http://www.gstatic.com/generate_204", "interval": "20m", "tolerance": 20 },
@@ -49,8 +47,8 @@
     { "tag": "洛-Reality-Only", "type": "selector", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["洛"] }, { "action": "include", "keywords": ["[Rr]eality"] }] },
     { "tag": "澳-Reality-Only", "type": "selector", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["洲2"] }, { "action": "include", "keywords": ["[Rr]eality"] }] },
     { "tag": "首-Reality-Only", "type": "selector", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["首"] }] },
-    { "tag": "GLOBAL", "type": "selector", "outbounds": ["🚀 默认代理", "♻️ 自动选择", "♻️ H2测试", "🍃 延迟辅助", "TAG-DIRECT"] },
-    { "tag": "TAG-DIRECT", "type": "direct" }
+    { "tag": "GLOBAL", "type": "selector", "outbounds": ["🚀 默认代理", "♻️ 自动选择", "♻️ H2测试", "🍃 延迟辅助", "🎯 全球直连"] },
+    { "tag": "🎯 全球直连", "type": "direct" }
   ],
   "route": {
     "rules": [
@@ -63,13 +61,13 @@
       { "type": "logical", "mode": "or", "rules": [{"domain_suffix": "push.apple.com"}, {"rule_set": "geoip-telegram"}], "invert": true, "action": "sniff", "sniffer": ["http", "tls", "quic", "dns"], "timeout": "500ms"},
       { "type": "logical", "mode": "or", "rules": [{"port": 53}, {"protocol": "dns"}], "action": "hijack-dns"},
       { "type": "logical", "mode": "or", "rules": [{"port": 853}, {"protocol": ["stun", "quic"]}], "action": "reject", "no_drop": true},
-      { "ip_is_private": true, "outbound": "TAG-DIRECT"},
-      { "rule_set": "geosite-private", "outbound": "TAG-DIRECT" },
+      { "ip_is_private": true, "outbound": "🎯 全球直连"},
+      { "rule_set": "geosite-private", "outbound": "🎯 全球直连" },
       { "network": "icmp", "action": "resolve"},
-      { "network": "icmp", "outbound": "TAG-DIRECT"},  
-      { "clash_mode": "Direct", "outbound": "TAG-DIRECT"},
+      { "network": "icmp", "outbound": "🎯 全球直连"},  
+      { "clash_mode": "Direct", "outbound": "🎯 全球直连"},
       { "clash_mode": "Global", "outbound": "GLOBAL"},    
-      { "rule_set": ["geosite-apple","geosite-douyin","geosite-bilibili","geosite-bilibili2"], "outbound": "TAG-DIRECT" },
+      { "rule_set": ["geosite-apple","geosite-douyin","geosite-bilibili","geosite-bilibili2"], "outbound": "🎯 全球直连" },
       { "rule_set": "geosite-github", "outbound": "👨‍💻 Github" },
       { "domain_keyword": ["tradingview","exocharts"],"outbound": "💱 crypto" },    
       { "rule_set": ["geosite-bybit","geosite-binance","geosite-crypto"],  "outbound": "💱 crypto" },
@@ -81,13 +79,13 @@
       { "rule_set": ["geosite-netflix","geosite-disney"],  "outbound": "🎥 奈迪"    },
       { "rule_set": "geosite-porn", "outbound": "📹 Porn" },
       { "rule_set": "geosite-microsoft", "outbound": "🪟 Microsoft" },
-      { "rule_set": "geosite-cn", "outbound": "TAG-DIRECT" },
+      { "rule_set": "geosite-cn", "outbound": "🎯 全球直连" },
       { "rule_set": "geosite-!cn", "outbound": "🚀 默认代理" },
       { "action": "resolve" },
       { "rule_set": "geoip-google", "outbound": "🍀 Google" },
       { "rule_set": "geoip-telegram", "outbound": "🎵 社媒" },
       { "rule_set": "geoip-netflix", "outbound": "🎥 奈迪" },
-      { "rule_set": ["geoip-cn","geoip-cn1"], "outbound": "TAG-DIRECT" }
+      { "rule_set": ["geoip-cn","geoip-cn1"], "outbound": "🎯 全球直连" }
     ],
     "rule_set": [
       { "tag": "geosite-fakeipfilter", "type": "remote", "initial_path": "/etc/sing-box/initial_path", "format": "source", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/qichiyuhub/rule/refs/heads/main/rules/fakeipfilter.json"},
@@ -123,14 +121,14 @@
       { "tag": "geoip-cn", "type": "remote", "initial_path": "/etc/sing-box/initial_path", "format": "binary", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/cn.srs" },
       { "tag": "geoip-cn1", "type": "remote", "initial_path": "/etc/sing-box/initial_path", "format": "binary", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/OneOhCloud/one-geoip/rule-set/one-china.srs" }
     ],
-    "default_http_client": "DDD",
+    "default_http_client": "rule-fetch",
     "final": "🐠 漏网之鱼",
     "auto_detect_interface": true,
     "default_domain_resolver": { "server": "ali" }
   },
   "experimental": {
     "cache_file": { "enabled": true, "path": "/etc/sing-box/cache.db", "store_fakeip": true },
-    "clash_api": { "external_controller": "0.0.0.0:9090", "external_ui": "/etc/sing-box/ui", "external_ui_download_detour": "TAG-DIRECT", "secret": "", 
+    "clash_api": { "external_controller": "0.0.0.0:9090", "external_ui": "/etc/sing-box/ui", "external_ui_download_detour": "🎯 全球直连", "secret": "", 
     "default_mode": "rule", "external_ui_download_url": "https://jingxiang.gaminggod.top/https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip"
     }
   }
