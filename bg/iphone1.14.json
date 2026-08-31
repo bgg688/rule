@@ -39,7 +39,7 @@
     { "tag": "🎯 全球直连", "type": "direct" }
   ],
   "http_clients": [
-    { "tag": "直连", "detour": "🎯 全球直连" }
+    { "tag":"rule-fetch" }
   ],
   "route": {
     "rules": [
@@ -107,7 +107,7 @@
       { "tag": "geoip-cn", "type": "remote", "format": "binary", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/cn.srs" },
       { "tag": "geoip-cn1", "type": "remote", "format": "binary", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/OneOhCloud/one-geoip/rule-set/one-china.srs" }
     ],
-    "default_http_client": "直连",
+    "default_http_client": "rule-fetch",
     "final": "🐠 漏网之鱼",
     "auto_detect_interface": true,
     "default_domain_resolver": { "server": "public" }
