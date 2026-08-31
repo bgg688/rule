@@ -26,7 +26,7 @@
     { "tag": "socks-首-reality", "type": "socks", "listen": "0.0.0.0", "listen_port": 10913 }
   ],
   "http_clients": [
-    { "tag": "直连", "detour": "🎯 全球直连" }
+    { "tag": "DDD", "detour": "🎯 全球直连" }
   ],
   "outbounds": [
     { "tag": "💱 crypto", "type": "selector", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["首|bj|荷|洛|洲2"] }, { "action": "include", "keywords": ["[Rr]eality"] }] },                                                                    
@@ -123,7 +123,7 @@
       { "tag": "geoip-cn", "type": "remote", "format": "binary", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/cn.srs" },
       { "tag": "geoip-cn1", "type": "remote", "format": "binary", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/OneOhCloud/one-geoip/rule-set/one-china.srs" }
     ],
-    "default_http_client": "直连",
+    "default_http_client": "🎯 全球直连",
     "final": "🐠 漏网之鱼",
     "auto_detect_interface": true,
     "default_domain_resolver": { "server": "ali" }
