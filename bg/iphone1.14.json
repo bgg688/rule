@@ -44,7 +44,7 @@
   "route": {
     "rules": [
       { "inbound": "tun-in", "action": "resolve", "strategy": "ipv4_only" },
-      { "type": "logical", "mode": "and", "rules": [{"port": [53, 853], "invert": true}, {"clash_mode": "Global", "invert": true}, {"type": "logical", "mode": "or", "rules": [{"ip_is_private": true}, {"rule_set": ["geoip-cn","geoip-cn1"]}]}], "action": "bypass"},
+      { "type": "logical", "mode": "and", "rules": [{"port": [53, 853], "invert": true}, {"clash_mode": "Global", "invert": true}, {"type": "logical", "mode": "or", "rules": [{"ip_is_private": true}, {"rule_set": ["geosite-tesla","geoip-cn","geoip-cn1"]}]}], "action": "bypass"},
       { "type": "logical", "mode": "or", "rules": [{"domain_suffix": "push.apple.com"}, {"rule_set": "geoip-telegram"}], "invert": true, "action": "sniff", "sniffer": ["http", "tls", "quic", "dns"], "timeout": "500ms"},
       { "type": "logical", "mode": "or", "rules": [{"port": 53}, {"protocol": "dns"}], "action": "hijack-dns"},
       { "type": "logical", "mode": "or", "rules": [{"port": 853}, {"protocol": ["stun", "quic"]}], "action": "reject", "no_drop": true},
@@ -54,6 +54,7 @@
       { "clash_mode": "Global", "outbound": "GLOBAL"},
       { "rule_set": ["geosite-ADS","geosite-pornADS"], "action": "reject"},
       { "rule_set": ["geosite-apple", "geosite-tesla", "geosite-alibaba", "geosite-aliyun", "geosite-xiaomi"], "outbound": "🎯 全球直连" },
+      { "domain_keyword": ["tesla"],"outbound": "🎯 全球直连" },
       { "domain_keyword": ["tradingview","exocharts"],"outbound": "💱 crypto" },
       { "rule_set": ["geosite-bybit","geosite-binance","geosite-crypto"],  "outbound": "💱 crypto" },
       { "rule_set": "geosite-talkatone", "outbound": "📲 Talkatone" },
