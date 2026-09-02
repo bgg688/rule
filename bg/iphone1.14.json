@@ -54,7 +54,7 @@
       { "clash_mode": "Global", "outbound": "GLOBAL"},
       { "rule_set": ["geosite-ADS","geosite-pornADS"], "action": "reject"},
       { "rule_set": ["geosite-apple", "geosite-tesla", "geosite-alibaba", "geosite-aliyun", "geosite-xiaomi"], "outbound": "🎯 全球直连" },
-      { "domain_keyword": ["tesla"],"outbound": "🎯 全球直连" },
+      { "domain_keyword": ["tesla","teodns"],"outbound": "🎯 全球直连" },
       { "domain_keyword": ["tradingview","exocharts"],"outbound": "💱 crypto" },
       { "rule_set": ["geosite-bybit","geosite-binance","geosite-crypto"],  "outbound": "💱 crypto" },
       { "rule_set": "geosite-talkatone", "outbound": "📲 Talkatone" },
