@@ -56,7 +56,6 @@
       { "inbound": "socks-洛-reality", "outbound": "洛-Reality-Only" },
       { "inbound": "socks-澳-reality", "outbound": "澳-Reality-Only" },
       { "inbound": "socks-首-reality", "outbound": "首-Reality-Only" },
-      { "type": "logical", "mode": "and", "rules": [{"port": [53, 853], "invert": true}, {"clash_mode": "Global", "invert": true}, {"type": "logical", "mode": "or", "rules": [{"ip_is_private": true}, {"rule_set": ["geoip-cn","geoip-cn1"]}]}], "action": "bypass"},
       { "type": "logical", "mode": "or", "rules": [{"domain_suffix": "push.apple.com"}, {"rule_set": "geoip-telegram"}], "invert": true, "action": "sniff", "sniffer": ["http", "tls", "quic", "dns"], "timeout": "500ms"},
       { "type": "logical", "mode": "or", "rules": [{"port": 53}, {"protocol": "dns"}], "action": "hijack-dns"},
       { "type": "logical", "mode": "or", "rules": [{"port": 853}, {"protocol": ["stun", "quic"]}], "action": "reject", "no_drop": true},
