@@ -127,7 +127,7 @@
     "default_domain_resolver": { "server": "ali" }
   },
   "experimental": {
-    "cache_file": { "enabled": true, "path": "/var/lib/cache.db", "store_fakeip": true },
+    "cache_file": { "enabled": true, "path": "/var/lib/sing-box/cache.db", "store_fakeip": true },
     "clash_api": { "external_controller": "0.0.0.0:9090", "external_ui": "/var/lib/sing-box/ui", "external_ui_download_detour": "🎯 全球直连", "secret": "", 
     "default_mode": "rule", "external_ui_download_url": "https://jingxiang.gaminggod.top/https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip"
     }
