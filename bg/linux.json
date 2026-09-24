@@ -53,7 +53,7 @@
   "route": {
     "rules": [
       { "inbound": "socks-坡-reality", "outbound": "坡-Reality-Only" },
-      { "inbound": "socks-荷-reality", "outbound": "瓦-Reality-Only" },
+      { "inbound": "socks-瓦-reality", "outbound": "瓦-Reality-Only" },
       { "inbound": "socks-洛-reality", "outbound": "洛-Reality-Only" },
       { "inbound": "socks-澳-reality", "outbound": "澳-Reality-Only" },
       { "inbound": "socks-首-reality", "outbound": "首-Reality-Only" },
