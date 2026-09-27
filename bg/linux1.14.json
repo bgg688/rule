@@ -45,7 +45,7 @@
     { "tag": "🎯 全球直连", "type": "direct" }
   ],
   "http_clients": [
-    {"tag": "直连下载", "detour": "🎯 全球直连"}
+    {"tag": "直连下载"}
   ],
   "route": {
     "rules": [
@@ -70,9 +70,9 @@
       { "rule_set": ["geosite-youtube","geosite-speedtest"], "outbound": "📹 YouTube" },
       { "rule_set": "geosite-google", "outbound": "🍀 Google" },
       { "rule_set": "geosite-category-ai-!cn", "outbound": "🧠 AI" },
-      { "rule_set": ["geosite-discord","geosite-telegram","geosite-tiktok","geosite-media"], "outbound": "🎵 社媒" },
+      { "rule_set": ["geosite-discord","geosite-telegram","geosite-tiktok","geosite-category-social-media-!cn"], "outbound": "🎵 社媒" },
       { "rule_set": ["geosite-netflix","geosite-disney"],  "outbound": "🎥 奈迪"    },
-      { "rule_set": "geosite-porn", "outbound": "📹 Porn" },
+      { "rule_set": "geosite-category-porn", "outbound": "📹 Porn" },
       {"rule_set": "geosite-microsoft@cn", "outbound": "🎯 全球直连"},
       { "rule_set": "geosite-microsoft", "outbound": "🪟 Microsoft" },
       {"rule_set": "geosite-steam@cn", "outbound": "🎯 全球直连"},
@@ -85,7 +85,7 @@
     ],
     "rule_set": [
       {"tag": ["fakeipfilter-cn", "fakeipfilter-!cn"], "type": "remote", "format": "source", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/qichiyuhub/rule/refs/heads/main/rules/{tag}.json"},
-      {"tag": ["geosite-category-ai-!cn","geosite-douyin","geosite-bilibili","geosite-bilibili2", "geosite-speedtest","geosite-youtube", "geosite-google", "geosite-github", "geosite-microsoft", "geosite-microsoft@cn","geosite-telegram", "geosite-tiktok", "geosite-netflix","geosite-disney","geosite-binance", "geosite-bybit", "geosite-category-cryptocurrency", 
+      {"tag": ["geosite-category-ai-!cn","geosite-douyin","geosite-bilibili","geosite-bilibili2", "geosite-speedtest","geosite-youtube", "geosite-google", "geosite-github", "geosite-microsoft", "geosite-category-social-media-!cn","geosite-microsoft@cn","geosite-telegram", "geosite-discord","geosite-tiktok", "geosite-netflix","geosite-disney","geosite-binance", "geosite-bybit", "geosite-category-cryptocurrency", 
         "geosite-steam@cn", "geosite-steam","geosite-category-porn","geosite-geolocation-!cn", "geosite-cn", "geosite-private"], "type": "remote", "format": "binary", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/{tag}.srs"},
       {"tag": "geoip-telegram", "type": "remote", "format": "binary", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/telegram.srs"},
       { "tag": "geoip-netflix", "type": "remote", "format": "binary", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/netflix.srs" },
@@ -97,13 +97,13 @@
     "default_domain_resolver": {"server": "ali"}
   },
   "inbounds": [
-    { "tag": "tun-in", "type": "tun","address": ["172.19.0.1/30","fdfe:dcba:9876::1/126"], "auto_route": true, "auto_redirect": true   },
+    { "tag": "tun-in", "type": "tun","address": "172.19.0.1/30", "auto_route": true, "auto_redirect": true   },
     { "tag": "mixed-in",  "type": "mixed", "listen": "0.0.0.0",  "listen_port": 10900 }
   ],
-  "services": [{ "type": "api", "listen": "0.0.0.0", "listen_port": 9090, "secret": "passwd","dashboard": {"enabled": true,"path": "/var/lib/sing-box/dashboard"}} ],
   "experimental": {
     "cache_file": { "enabled": true,"path": "/var/lib/sing-box/cache.db","store_dns": true},
-    "clash_api": { "external_controller": "0.0.0.0:9095","external_ui": "/var/lib/sing-box/ui","secret": "passwd","default_mode": "Rule" }
+    "clash_api": { "external_controller": "0.0.0.0:9090", "external_ui": "/var/lib/sing-box/ui", "external_ui_download_detour": "🎯 全球直连", "secret": "", "default_mode": "rule", "external_ui_download_url": "https://jingxiang.gaminggod.top/https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip"
+    }
   },
   "certificate": { "store": "chrome" },
   "ntp": { "enabled": true, "server": "time.apple.com"},
