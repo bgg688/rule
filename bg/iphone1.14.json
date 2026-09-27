@@ -79,10 +79,9 @@
     ],
     "rule_set": [
       {"tag": ["fakeipfilter-cn", "fakeipfilter-!cn"], "type": "remote", "format": "source", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/qichiyuhub/rule/refs/heads/main/rules/{tag}.json"},
-      {"tag": ["geosite-category-ads","geosite-category-ai-!cn","geosite-speedtest","geosite-youtube", "geosite-google", "geosite-microsoft@cn","geosite-microsoft","geosite-github","geosite-apple@cn","geosite-apple","geosite-alibaba","geosite-aliyun","geosite-xiaomi","geosite-category-social-media-!cn","geosite-telegram",
-        "geosite-discord","geosite-tiktok", "geosite-netflix","geosite-disney","geosite-binance", "geosite-bybit", "geosite-category-cryptocurrency", 
-        "geosite-steam@cn", "geosite-steam","geosite-category-porn","geosite-geolocation-!cn", "geosite-cn", "geosite-private"],
-        "type": "remote", "format": "binary", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/{tag}.srs"},
+      {"tag": ["geosite-category-ads","geosite-category-ai-!cn","geosite-speedtest","geosite-youtube", "geosite-google", "geosite-microsoft@cn","geosite-microsoft","geosite-github","geosite-apple@cn","geosite-apple","geosite-alibaba","geosite-aliyun","geosite-xiaomi","geosite-category-social-media-!cn","geosite-telegram","geosite-discord","geosite-tiktok", "geosite-netflix",
+        "geosite-disney","geosite-binance", "geosite-bybit", "geosite-category-cryptocurrency", "geosite-steam@cn", "geosite-steam","geosite-category-porn","geosite-geolocation-!cn", "geosite-cn", "geosite-private"], "type": "remote", "format": "binary", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/{tag}.srs"
+      },
       { "tag": "geosite-pornADS", "type": "remote", "format": "binary", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-porn@ads.srs" },
       { "tag": "geosite-talkatone", "type": "remote", "format": "binary", "url": "https://jingxiang.gaminggod.top/https://github.com/bgg688/Talkatone/raw/refs/heads/main/Talkatone.srs" },   
       { "tag": "geosite-tesla", "type": "remote", "format": "binary", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/tesla.srs" },
