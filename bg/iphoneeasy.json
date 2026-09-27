@@ -16,7 +16,7 @@
   ],
   "outbounds": [
     { "tag": "🚀 默认代理", "type": "selector", "outbounds": ["♻️ 自动选择", "♻️ H2测试", "{all}"] },
-    { "tag": "🧠 AI", "type": "selector", "outbounds": ["♻️ 自动选择", "{all}"] },
+    { "tag": "🧠 AI", "type": "selector", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["洛|坡"] }, { "action": "include", "keywords": ["[Rr]eality"] }] },
     { "tag": "📹 Netflix", "type": "selector", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["洛|坡"] }, { "action": "include", "keywords": ["[Rr]eality"] }] },
     { "tag": "📹 YouTube", "type": "selector", "outbounds": ["♻️ 自动选择", "♻️ H2测试"] },
     { "tag": "🍀 Google", "type": "selector", "outbounds": ["♻️ 自动选择", "♻️ H2测试"] },
