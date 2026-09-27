@@ -52,7 +52,6 @@
       { "inbound": "socks-坡-reality", "outbound": "坡-筛选" },
       { "inbound": "socks-瓦-reality", "outbound": "瓦-筛选" },
       { "inbound": "socks-洛-reality", "outbound": "洛-筛选" },
-      { "inbound": "socks-澳-reality", "outbound": "澳-筛选" },
       { "inbound": "socks-首-reality", "outbound": "首-筛选" },
       {"type": "logical", "mode": "and", "rules": [{"port": [53, 853], "invert": true}, {"clash_mode": "Global", "invert": true}, {"type": "logical", "mode": "or", "rules": [{"ip_is_private": true}, {"rule_set": "geoip-cn"}]}], "action": "bypass"},
       {"type": "logical", "mode": "or", "rules": [{"domain_suffix": "push.apple.com"}, {"rule_set": "geoip-telegram"}], "invert": true, "action": "sniff", "sniffer": ["http", "tls", "stun", "quic", "dns"], "timeout": "100ms"},
@@ -97,7 +96,11 @@
     "default_domain_resolver": {"server": "ali"}
   },
   "inbounds": [
-    { "tag": "tun-in", "type": "tun","address": "172.19.0.1/30", "auto_route": true, "auto_redirect": true   },
+    { "tag": "socks-坡-reality", "type": "socks", "listen": "0.0.0.0", "listen_port": 10901 },
+    { "tag": "socks-瓦-reality", "type": "socks", "listen": "0.0.0.0", "listen_port": 10903 },
+    { "tag": "socks-洛-reality", "type": "socks", "listen": "0.0.0.0", "listen_port": 10904 },
+    { "tag": "socks-首-reality", "type": "socks", "listen": "0.0.0.0", "listen_port": 10909 },
+    { "tag": "tun-in", "type": "tun","address": "172.19.0.1/30", "auto_route": true, "auto_redirect": true },
     { "tag": "mixed-in",  "type": "mixed", "listen": "0.0.0.0",  "listen_port": 10900 }
   ],
   "experimental": {
