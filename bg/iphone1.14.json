@@ -89,7 +89,7 @@
       {"tag": "geoip-netflix", "type": "remote", "format": "binary", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/netflix.srs"},
       {"tag": "geoip-cn", "type": "remote", "format": "binary", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/cn.srs"},
       {"tag": "geoip-cn1", "type": "remote", "format": "binary", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-cn.srs"},
-      { "tag": "geoip-cn2", "type": "remote", "format": "binary", "url": "https://gh.13131.cc.cd/https://raw.githubusercontent.com/OneOhCloud/one-geoip/rule-set/one-china.srs"}
+      { "tag": "geoip-cn2", "type": "remote", "format": "binary", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/OneOhCloud/one-geoip/rule-set/one-china.srs"}
     ],
     "default_http_client": "rule-fetch",
     "final": "🐠 漏网之鱼",
