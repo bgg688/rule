@@ -21,7 +21,7 @@
     "final": "cf", "strategy": "ipv4_only", "cache_capacity": 8192, "optimistic": {"enabled": true}, "reverse_mapping": true
   },
   "inbounds": [
-    { "type": "tun", "tag": "tun-in", "address": ["172.19.0.1/30"], "auto_route": true }
+    { "type": "tun", "tag": "tun-in", "address": "172.19.0.1/30", "auto_route": true }
   ],
   "outbounds": [
     { "tag": "💱 crypto", "type": "selector", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["首|澳"] }, { "action": "include", "keywords": ["[Rr]eality"] }] },
