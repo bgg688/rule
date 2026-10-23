@@ -3,7 +3,7 @@
   "dns": {
     "servers": [
       {"tag": "local", "type": "local", "prefer_go": true},
-      {"tag": "qq", "type": "udp", "server": "119.29.29.29"},
+      {"tag": "tencent", "type": "udp", "server": "119.29.29.29"},
       {"tag": "cf", "type": "udp", "server": "1.1.1.1", "detour": "🚀 默认代理"},
       {"tag": "fakeip", "type": "fakeip", "inet4_range": "198.19.0.0/16"}
     ],
@@ -12,7 +12,7 @@
       { "rule_set": ["category-ads-all","category-porn@ads"], "action": "reject"},
       { "clash_mode": "Direct", "server": "local"},
       { "clash_mode": "Global", "server": "fakeip"},
-      { "rule_set": ["fakeipfilter-cn","microsoft@cn","apple@cn", "tesla", "douyin","alibaba", "aliyun","xiaomi","cn","private"], "server": "qq" },
+      { "rule_set": ["fakeipfilter-cn","microsoft@cn","apple@cn", "tesla", "douyin","alibaba", "aliyun","xiaomi","cn","private"], "server": "local" },
       { "rule_set": "fakeipfilter-!cn", "server": "cf"},
       { "type": "logical", "mode": "and", "rules": [{"query_type": ["A", "AAAA"]}, {"rule_set": "geolocation-!cn", "invert": true}], "action": "evaluate", "server": "cf", "client_subnet": "223.5.5.0/24","timeout": "2s"},
       { "match_response": true, "rule_set": "geoip-cn", "server": "local"},
@@ -93,6 +93,6 @@
     "default_http_client": "rule-fetch",
     "final": "🐠 漏网之鱼",
     "auto_detect_interface": true,
-    "default_domain_resolver": { "server": "qq" }
+    "default_domain_resolver": { "server": "tencent" }
   }
 }
