@@ -4,16 +4,14 @@
     "servers": [
       {"tag": "local", "type": "local", "prefer_go": true},
       {"tag": "ali", "type": "https", "server": "223.5.5.5"},
-      {"tag": "tx", "type": "https", "server": "doh.pub", "domain_resolver": "hosts"},
-      {"tag": "google", "type": "https", "server": "8.8.8.8", "detour": "🚀 默认代理"},
-      {"tag": "fakeip", "type": "fakeip", "inet4_range": "198.19.0.0/16"},
-      {"type": "hosts", "tag": "hosts", "predefined": {"doh.pub": ["1.12.12.21", "120.53.53.53"]}}
+      {"tag": "google", "type": "tls", "server": "1.1.1.1", "detour": "🚀 默认代理"},
+      {"tag": "fakeip", "type": "fakeip", "inet4_range": "198.19.0.0/16"}
     ],
     "rules": [
       {"query_type": ["HTTPS", "SVCB"], "action": "reject"},
       {"clash_mode": "Direct", "server": "local"},
       {"clash_mode": "Global", "server": "fakeip"},
-      {"rule_set": ["fakeipfilter-cn", "geosite-cn", "geosite-microsoft@cn", "geosite-private"], "server": "local"},
+      {"rule_set": ["fakeipfilter-cn", "geosite-cn", "geosite-microsoft@cn","geosite-douyin","geosite-private"], "server": "local"},
       {"rule_set": "fakeipfilter-!cn", "server": "google"},
       {"type": "logical", "mode": "and", "rules": [{"query_type": ["A", "AAAA"]}, {"rule_set": "geosite-geolocation-!cn", "invert": true}], "action": "evaluate", "server": "google", "client_subnet": "223.5.5.0/24","timeout": "2s"},
       {"match_response": true, "rule_set": "geoip-cn", "server": "local"},
@@ -21,6 +19,15 @@
     ],
     "final": "google","strategy": "ipv4_only", "cache_capacity": 8192,"optimistic": {"enabled": true},"reverse_mapping": true
   },
+  "http_clients": [  {"tag": "直连下载"} ],
+  "inbounds": [
+    { "tag": "socks-坡-reality", "type": "socks", "listen": "0.0.0.0", "listen_port": 10901 },
+    { "tag": "socks-瓦-reality", "type": "socks", "listen": "0.0.0.0", "listen_port": 10903 },
+    { "tag": "socks-洛-reality", "type": "socks", "listen": "0.0.0.0", "listen_port": 10904 },
+    { "tag": "socks-首-reality", "type": "socks", "listen": "0.0.0.0", "listen_port": 10909 },
+    { "tag": "tun-in", "type": "tun","address": "172.19.0.1/30", "auto_route": true, "auto_redirect": true },
+    { "tag": "mixed-in",  "type": "mixed", "listen": "0.0.0.0",  "listen_port": 10900 }
+  ],
   "outbounds": [
     { "tag": "💱 crypto", "type": "selector", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["首|瓦"] }, { "action": "include", "keywords": ["[Rr]eality"] }] },          
     { "tag": "📹 YouTube", "type": "selector", "outbounds": ["♻️ 自动选择", "♻️ H2测试", "{all}"], "filter": [{ "action": "exclude", "keywords": ["首"] }] },
@@ -43,9 +50,6 @@
     { "tag": "首-筛选", "type": "selector","outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["首"] }, { "action": "include", "keywords": ["[Rr]eality"] }] },
     { "tag": "GLOBAL", "type": "selector", "outbounds": ["🚀 默认代理", "♻️ 自动选择", "♻️ H2测试", "🍃 延迟辅助", "🎯 全球直连"] },
     { "tag": "🎯 全球直连", "type": "direct" }
-  ],
-  "http_clients": [
-    {"tag": "直连下载"}
   ],
   "route": {
     "rules": [
@@ -76,6 +80,7 @@
       { "rule_set": "geosite-microsoft", "outbound": "🪟 Microsoft" },
       {"rule_set": "geosite-steam@cn", "outbound": "🎯 全球直连"},
       { "rule_set": "geosite-steam", "outbound": "🎮 Steam" },
+      {"rule_set": "geosite-cn", "outbound": "🎯 全球直连"},
       { "rule_set": "geosite-geolocation-!cn", "outbound": "🚀 默认代理" },
       { "inbound":  "mixed-in", "action": "resolve"},
       { "rule_set": "geoip-telegram", "outbound": "🎵 社媒" },
@@ -84,8 +89,10 @@
     ],
     "rule_set": [
       {"tag": ["fakeipfilter-cn", "fakeipfilter-!cn"], "type": "remote", "format": "source", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/qichiyuhub/rule/refs/heads/main/rules/{tag}.json"},
-      {"tag": ["geosite-category-ai-!cn","geosite-douyin","geosite-bilibili","geosite-bilibili2", "geosite-speedtest","geosite-youtube", "geosite-google", "geosite-github", "geosite-microsoft", "geosite-category-social-media-!cn","geosite-microsoft@cn","geosite-telegram", "geosite-discord","geosite-tiktok", "geosite-netflix","geosite-disney","geosite-binance", "geosite-bybit", "geosite-category-cryptocurrency", 
-        "geosite-steam@cn", "geosite-steam","geosite-category-porn","geosite-geolocation-!cn", "geosite-cn", "geosite-private"], "type": "remote", "format": "binary", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/{tag}.srs"},
+      {"tag": ["geosite-category-ai-!cn","geosite-douyin","geosite-bilibili","geosite-bilibili2", "geosite-speedtest","geosite-youtube", "geosite-google", "geosite-github", "geosite-microsoft",
+              "geosite-category-social-media-!cn","geosite-microsoft@cn","geosite-telegram", "geosite-discord","geosite-tiktok", "geosite-netflix","geosite-disney","geosite-binance", "geosite-bybit", 
+              "geosite-category-cryptocurrency", "geosite-steam@cn", "geosite-steam","geosite-category-porn","geosite-geolocation-!cn", "geosite-cn", "geosite-private"], 
+              "type": "remote", "format": "binary", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/{tag}.srs"},
       {"tag": "geoip-telegram", "type": "remote", "format": "binary", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/telegram.srs"},
       { "tag": "geoip-netflix", "type": "remote", "format": "binary", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/netflix.srs" },
       {"tag": "geoip-cn", "type": "remote", "format": "binary", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-cn.srs"}
@@ -95,18 +102,10 @@
     "auto_detect_interface": true,
     "default_domain_resolver": {"server": "ali"}
   },
-  "inbounds": [
-    { "tag": "socks-坡-reality", "type": "socks", "listen": "0.0.0.0", "listen_port": 10901 },
-    { "tag": "socks-瓦-reality", "type": "socks", "listen": "0.0.0.0", "listen_port": 10903 },
-    { "tag": "socks-洛-reality", "type": "socks", "listen": "0.0.0.0", "listen_port": 10904 },
-    { "tag": "socks-首-reality", "type": "socks", "listen": "0.0.0.0", "listen_port": 10909 },
-    { "tag": "tun-in", "type": "tun","address": "172.19.0.1/30", "auto_route": true, "auto_redirect": true },
-    { "tag": "mixed-in",  "type": "mixed", "listen": "0.0.0.0",  "listen_port": 10900 }
-  ],
   "experimental": {
     "cache_file": { "enabled": true,"path": "/var/lib/sing-box/cache.db","store_dns": true},
-    "clash_api": { "external_controller": "0.0.0.0:9090", "external_ui": "/var/lib/sing-box/ui", "external_ui_download_detour": "🎯 全球直连", "secret": "", "default_mode": "rule", "external_ui_download_url": "https://jingxiang.gaminggod.top/https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip"
-    }
+    "clash_api": { "external_controller": "0.0.0.0:9090", "external_ui": "/var/lib/sing-box/ui", "external_ui_download_detour": "🎯 全球直连", "secret": "", "default_mode": "rule",
+                  "external_ui_download_url": "https://jingxiang.gaminggod.top/https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip" }
   },
   "certificate": { "store": "chrome" },
   "ntp": { "enabled": true, "server": "time.apple.com"},
