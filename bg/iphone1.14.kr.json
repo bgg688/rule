@@ -2,9 +2,9 @@
   "log": { "disabled": false, "level": "error", "timestamp": true },
   "dns": {
     "servers": [
-      {"tag": "local", "type": "local", "prefer_go": true},
-      {"tag": "tencent", "type": "udp", "server": "119.29.29.29"},
-      {"tag": "cf", "type": "udp", "server": "1.1.1.1", "detour": "🚀 默认代理"},
+      {"tag": "local", "type": "local", "prefer_go": true},      
+      {"tag": "ali", "type": "https", "server": "223.5.5.5"},
+      {"tag": "cf", "type": "tls", "server": "1.1.1.1", "detour": "🚀 默认代理"},
       {"tag": "fakeip", "type": "fakeip", "inet4_range": "198.19.0.0/16"}
     ],
     "rules": [
@@ -93,6 +93,6 @@
     "default_http_client": "rule-fetch",
     "final": "🐠 漏网之鱼",
     "auto_detect_interface": true,
-    "default_domain_resolver": { "server": "tencent" }
+    "default_domain_resolver": { "server": "ali" }
   }
 }
