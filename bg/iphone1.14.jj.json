@@ -1,0 +1,75 @@
+{
+  "log": { "disabled": false, "level": "info", "timestamp": true },
+  "inbounds": [
+    { "type": "tun", "tag": "tun-in", "address": "172.19.0.1/30", "auto_route": true }
+  ],
+  "http_clients": [
+    { "tag":"rule-fetch" }
+  ],
+  "dns": {
+    "servers": [
+      {"tag": "local", "type": "local", "prefer_go": true},      
+      {"tag": "ali", "type": "https", "server": "223.5.5.5"},
+      {"tag": "cf", "type": "tls", "server": "1.1.1.1", "detour": "🚀 默认代理"},
+      {"tag": "fakeip", "type": "fakeip", "inet4_range": "198.19.0.0/16"}
+    ],
+    "rules": [
+      {"query_type": ["HTTPS", "SVCB"], "action": "reject"},
+      { "rule_set": "category-ads-all", "action": "reject"},
+      { "clash_mode": "Direct", "server": "local"},
+      { "clash_mode": "Global", "server": "fakeip"},
+      { "rule_set": ["fakeipfilter-cn","microsoft@cn","apple@cn", "tesla", "douyin","alibaba", "xiaomi","cn","private"], "server": "local" },
+      { "rule_set": "fakeipfilter-!cn", "server": "cf"},
+      { "type": "logical", "mode": "and", "rules": [{"query_type": ["A", "AAAA"]}, {"rule_set": "geolocation-!cn", "invert": true}], "action": "evaluate", "server": "cf", "client_subnet": "223.5.5.0/24","timeout": "2s"},
+      { "match_response": true, "rule_set": "geoip-cn", "server": "local"},
+      { "query_type": ["A", "AAAA"], "server": "fakeip", "rewrite_ttl": 1}
+    ],
+    "final": "cf", "strategy": "ipv4_only", "cache_capacity": 8192, "optimistic": {"enabled": true}, "reverse_mapping": true
+  },
+  "outbounds": [
+    { "tag": "🍀 Google", "type": "selector", "outbounds": ["♻️ 自动选择", "{all}"], "filter": [{ "action": "exclude", "keywords": ["澳"] }] },
+    { "tag": "🧠 AI", "type": "selector", "outbounds": ["{all}"], "filter": [{ "action": "exclude", "keywords": ["澳"] }] },
+    { "tag": "🎵 社媒", "type": "selector", "outbounds": ["♻️ 自动选择","{all}"], "filter": [{ "action": "exclude", "keywords": ["澳"] }] },
+    { "tag": "🍏 APPLE", "type": "selector", "outbounds": ["🎯 全球直连", "{all}"], "filter": [{ "action": "exclude", "keywords": ["澳"] } ] },
+    { "tag": "🐠 漏网之鱼", "type": "selector", "outbounds": ["🎯 全球直连", "🚀 默认代理", "{all}"] },
+    { "tag": "♻️ 自动选择", "type": "urltest", "outbounds": ["{all}"], "filter": [{ "action": "include", "keywords": ["洛|坡|瓦"] } ], "url": "http://www.apple.com/library/test/success.html", "interval": "6m", "tolerance": 50 },
+    { "tag": "🚀 默认代理", "type": "selector", "outbounds": ["♻️ 自动选择", "♻️ H2测试", "{all}"] },
+    { "tag": "GLOBAL", "type": "selector", "outbounds": [ "🚀 默认代理", "♻️ 自动选择", "{all}", "🎯 全球直连"] },
+    { "tag": "🎯 全球直连", "type": "direct" }
+  ],
+  "route": {
+    "rules": [
+      { "type": "logical", "mode": "or", "rules": [{"domain_suffix": "push.apple.com"}, {"rule_set": "geoip-telegram"}], "invert": true, "action": "sniff", "sniffer": ["http", "tls", "quic", "dns"], "timeout": "100ms"},
+      { "type": "logical", "mode": "or", "rules": [{"port": 53}, {"protocol": "dns"}], "action": "hijack-dns"},
+      { "ip_is_private": true, "outbound": "🎯 全球直连" },
+      { "type": "logical", "mode": "or", "rules": [{"port": 853}, {"protocol": ["stun", "quic"]}], "action": "reject", "no_drop": true},
+      { "clash_mode": "Direct", "outbound": "🎯 全球直连"},
+      { "clash_mode": "Global", "outbound": "GLOBAL"},
+      { "rule_set": "private", "outbound": "🎯 全球直连" },
+      { "rule_set": ["category-ads-all","category-porn@ads"], "action": "reject"},
+      { "rule_set": ["apple@cn", "microsoft@cn","tesla","douyin","alibaba", "xiaomi"], "outbound": "🎯 全球直连" },
+      { "domain_keyword": ["tesla","teodns"],"outbound": "🎯 全球直连" },
+      { "rule_set": "google", "outbound": "🍀 Google" },
+      { "rule_set": "category-ai-!cn", "outbound": "🧠 AI" },
+      { "rule_set": ["meta","category-social-media-!cn"], "outbound": "🎵 社媒" },
+      { "rule_set": "apple", "outbound": "🍏 APPLE" },
+      { "rule_set": "cn", "outbound": "🎯 全球直连" },
+      { "rule_set": "geolocation-!cn", "outbound": "🚀 默认代理" },
+      { "rule_set": ["geoip-cn","geoip-cn1","geoip-cn2"], "outbound": "🎯 全球直连" }
+    ],
+    "rule_set": [
+      {"tag": ["fakeipfilter-cn", "fakeipfilter-!cn"], "type": "remote", "format": "source", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/qichiyuhub/rule/refs/heads/main/rules/{tag}.json"},
+      {"tag": ["category-ads-all","category-ai-!cn", "google", "microsoft@cn","microsoft", "tesla", "apple@cn","apple",
+               "alibaba", "xiaomi","category-social-media-!cn", "douyin", "geolocation-!cn", "cn", "private"],
+              "type": "remote", "format": "binary", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/{tag}.srs"
+      },
+      {"tag": "geoip-cn", "type": "remote", "format": "binary", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/cn.srs"},
+      {"tag": "geoip-cn1", "type": "remote", "format": "binary", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-cn.srs"},
+      { "tag": "geoip-cn2", "type": "remote", "format": "binary", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/OneOhCloud/one-geoip/rule-set/one-china.srs"}
+    ],
+    "default_http_client": "rule-fetch",
+    "final": "🐠 漏网之鱼",
+    "auto_detect_interface": true,
+    "default_domain_resolver": { "server": "ali" }
+  }
+}
