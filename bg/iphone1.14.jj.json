@@ -46,7 +46,7 @@
       { "clash_mode": "Direct", "outbound": "🎯 全球直连"},
       { "clash_mode": "Global", "outbound": "GLOBAL"},
       { "rule_set": "private", "outbound": "🎯 全球直连" },
-      { "rule_set": ["category-ads-all","category-porn@ads"], "action": "reject"},
+      { "rule_set": "category-ads-all", "action": "reject"},
       { "rule_set": ["apple@cn", "microsoft@cn","tesla","douyin","alibaba", "xiaomi"], "outbound": "🎯 全球直连" },
       { "domain_keyword": ["tesla","teodns"],"outbound": "🎯 全球直连" },
       { "rule_set": "google", "outbound": "🍀 Google" },
@@ -59,8 +59,7 @@
     ],
     "rule_set": [
       {"tag": ["fakeipfilter-cn", "fakeipfilter-!cn"], "type": "remote", "format": "source", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/qichiyuhub/rule/refs/heads/main/rules/{tag}.json"},
-      {"tag": ["category-ads-all","category-ai-!cn", "google", "microsoft@cn","microsoft", "tesla", "apple@cn","apple",
-               "alibaba", "xiaomi","category-social-media-!cn", "douyin", "geolocation-!cn", "cn", "private"],
+      {"tag": ["category-ads-all","category-ai-!cn", "google", "microsoft@cn","microsoft", "tesla", "apple@cn","apple", "meta", "alibaba", "xiaomi","category-social-media-!cn", "douyin", "geolocation-!cn", "cn", "private"],
               "type": "remote", "format": "binary", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/{tag}.srs"
       },
       {"tag": "geoip-cn", "type": "remote", "format": "binary", "url": "https://jingxiang.gaminggod.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/cn.srs"},
