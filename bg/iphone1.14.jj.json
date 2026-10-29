@@ -39,7 +39,7 @@
   ],
   "route": {
     "rules": [
-      { "type": "logical", "mode": "or", "rules": [{"domain_suffix": "push.apple.com"}, {"rule_set": "geoip-telegram"}], "invert": true, "action": "sniff", "sniffer": ["http", "tls", "quic", "dns"], "timeout": "100ms"},
+      { "type": "logical", "mode": "or", "rules": [{"domain_suffix": "push.apple.com"}], "invert": true, "action": "sniff", "sniffer": ["http", "tls", "quic", "dns"], "timeout": "100ms"},
       { "type": "logical", "mode": "or", "rules": [{"port": 53}, {"protocol": "dns"}], "action": "hijack-dns"},
       { "ip_is_private": true, "outbound": "🎯 全球直连" },
       { "type": "logical", "mode": "or", "rules": [{"port": 853}, {"protocol": ["stun", "quic"]}], "action": "reject", "no_drop": true},
