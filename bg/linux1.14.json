@@ -2,7 +2,7 @@
   "$schema": "https://sing-box.sagernet.org/schema.json",
   "dns": {
     "servers": [
-      {"tag": "local", "type": "local", "prefer_go": true},
+      {"tag": "local", "type": "udp", "server": "223.5.5.5"},
       {"tag": "ali", "type": "https", "server": "223.5.5.5"},
       {"tag": "cf", "type": "tls", "server": "1.1.1.1", "detour": "🚁 默认代理"},
       {"tag": "fakeip", "type": "fakeip", "inet4_range": "198.19.0.0/16"}
@@ -96,8 +96,8 @@
     "default_domain_resolver": {"server": "ali"}
   },
   "experimental": {
-    "cache_file": { "enabled": true,"path": "/var/lib/sing-box/cache.db","store_dns": true},
-    "clash_api": { "external_controller": "0.0.0.0:9090", "external_ui": "/var/lib/sing-box/ui", "external_ui_download_detour": "🎯 全球直连", "secret": "", "default_mode": "rule",
+    "cache_file": { "enabled": true,"path": "/etc/sing-box/cache.db","store_dns": true},
+    "clash_api": { "external_controller": "0.0.0.0:9090", "external_ui": "/etc/sing-box/ui", "external_ui_download_detour": "🎯 全球直连", "secret": "", "default_mode": "rule",
                   "external_ui_download_url": "https://jingxiang.gaminggod.top/https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip" }
   },
   "certificate": { "store": "chrome" },
