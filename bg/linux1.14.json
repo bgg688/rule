@@ -2,7 +2,7 @@
   "dns": {
     "servers": [
       {"tag": "local", "type": "udp", "server": "119.28.28.28"},
-      {"tag": "ali", "type": "https", "server": "doh.pub","domain_resolver": "local"},
+      {"tag": "tx", "type": "https", "server": "doh.pub","domain_resolver": "local"},
       {"tag": "cf", "type": "tls", "server": "1.1.1.1", "detour": "🚁 默认代理 ☑️"},
       {"tag": "fakeip", "type": "fakeip", "inet4_range": "198.19.0.0/16"}
     ],
@@ -90,7 +90,7 @@
     "final": "🦈 漏网之鱼",
     "default_http_client": "直连下载",
     "auto_detect_interface": true,
-    "default_domain_resolver": {"server": "ali"}
+    "default_domain_resolver": {"server": "tx"}
   },
   "experimental": {
     "cache_file": { "enabled": true,"path": "/etc/sing-box/cache.db","store_dns": true},
