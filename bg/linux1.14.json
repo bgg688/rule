@@ -55,6 +55,7 @@
       { "clash_mode": "Direct", "outbound": "🎯 全球直连"},
       { "clash_mode": "Global", "outbound": "GLOBAL"},
       { "rule_set": ["microsoft@cn","apple@cn", "gamersky", "steam@cn", "tesla", "douyin","alibaba", "aliyun","xiaomi", "cn", "private"], "outbound": "🎯 全球直连"},
+      { "domain_keyword": "jimihua","outbound": "🎯 全球直连"},
       { "domain_keyword": ["tradingview","exocharts"],"outbound": "💰 加密货币" },    
       { "rule_set": ["bybit","binance","category-cryptocurrency"],  "outbound": "💰 加密货币" },
       { "rule_set": ["google","youtube","speedtest"], "outbound": "👻 谷歌油管" },
